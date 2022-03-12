@@ -6,11 +6,15 @@
 # Used Repo
 ## https://github.com/pigeonpig/alistonfly.io //在Flyio部署Alist
 ## https://github.com/valetzx/alllist //在Railwayo部署Alist
+## https://github.com/pigeonpig/alist-heroku //在Heroku部署Alist
+## https://github.com/valetzx/cloudreve-heroku //在Heroku部署Cloudreve
 ## https://github.com/pigeonpig/v2onkoyeb //在Heroku部署V2rN
 ## https://github.com/valetzx/v2flyio //在Flyio部署V2rN v2
 ## https://github.com/pigeonpig/v2flyio //在Flyio部署V2rN v1
 ## https://github.com/valetzx/allblog //在Vercel部署Onedrive Blog
-## https://github.com/valetzx/cloudreve-heroku //在Heroku部署Cloudreve
+## https://github.com/valetzx/OneManager-php //在Vercel部署OneManager
+## https://github.com/am-abudu/Qexo //在Vercel部署OneManager
+## https://github.com/hexojs/hexo //在Vercel部署Hexo
 
 # Used Page
 ## https://github.com/pigeonpig/pubfile 
