@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+  
+  <title>用Heroku创建一个专属于你的v2ray - redball&#39;s Blog</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+  
+  
+
+  <link rel="shortcut icon" href="https://drive.redball1017.ga/blog/image/avatar.jpg" type="image/jpg" />
+  <meta name="description" content="前言先放一个效果图给大家看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Heroku创建一个专属于你的v2ray">
+<meta property="og:url" content="https://blog.redball1017.ga/2021/05/02/creat-a-v2ray-for-you/index.html">
+<meta property="og:site_name" content="redball&#39;s Blog">
+<meta property="og:description" content="前言先放一个效果图给大家看">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image1.jpg">
+<meta property="og:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image2.jpg">
+<meta property="og:image" content="https://www.herokucdn.com/deploy/button.png">
+<meta property="og:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image3.jpg">
+<meta property="og:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image4.jpg">
+<meta property="og:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image5.jpg">
+<meta property="article:published_time" content="2021-05-02T06:29:18.000Z">
+<meta property="article:modified_time" content="2021-08-18T23:09:35.416Z">
+<meta property="article:author" content="redball">
+<meta property="article:tag" content="Heroku">
+<meta property="article:tag" content="v2ray">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image1.jpg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/highlight.js@9.15.8/styles/atom-one-dark.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/mdui_043tiny/css/mdui.css,gh/theme-nexmoe/hexo-theme-nexmoe@latest/source/lib/iconfont/iconfont.css,gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css?v=233" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css?v=1629351543128">
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="mdui-drawer-body-left">
+  
+  <div id="nexmoe-background">
+    <div class="nexmoe-bg" style="background-image: url(https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg)"></div>
+    <div class="mdui-appbar mdui-shadow-0">
+      <div class="mdui-toolbar">
+        <a mdui-drawer="{target: '#drawer', swipe: true}" title="menu" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon nexmoefont icon-menu"></i></a>
+        <div class="mdui-toolbar-spacer"></div>
+        <!--<a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></a>-->
+        <a href="/" title="redball" class="mdui-btn mdui-btn-icon"><img src="https://drive.redball1017.ga/blog/image/avatar.jpg" alt="redball"></a>
+       </div>
+    </div>
+  </div>
+  <div id="nexmoe-header">
+      <div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="redball">
+            <img src="https://drive.redball1017.ga/blog/image/avatar.jpg" alt="redball" alt="redball">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>10</div>
+        <div><span>标签</span>9</div>
+        <div><span>分类</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/" title="回到首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                回到首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/about.html" title="关于博客">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于博客
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple" href="/PY.html" title="我的朋友">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                我的朋友
+            </div>
+        </a>
+        
+    </div>
+    <aside id="nexmoe-sidebar">
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        <form id="search_form" action_e="https://cn.bing.com/search?q=site:blog.redball1017.ga" onsubmit="return search();">
+            <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+        </form>
+    </div>
+</div>
+  
+  <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-social">
+        <a class="mdui-ripple" href="https://space.bilibili.com/234292980" target="_blank" mdui-tooltip="{content: '哔哩哔哩'}" style="color: rgb(231, 106, 141);background-color: rgba(231, 106, 141, .15);">
+            <i class="nexmoefont icon-bilibili"></i>
+        </a><a class="mdui-ripple" href="https://github.com/redball1017/" target="_blank" mdui-tooltip="{content: 'GitHub'}" style="color: rgb(25, 23, 23);background-color: rgba(25, 23, 23, .15);">
+            <i class="nexmoefont icon-github"></i>
+        </a>
+    </div>
+</div>
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Wii-U/">Wii U</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Windows/">Windows</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/教程/">教程</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/模拟器/">模拟器</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/资源分享/">资源分享</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+  
+  
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/Heroku/" style="font-size: 10px;">Heroku</a> <a href="/tags/Onedrive/" style="font-size: 10px;">Onedrive</a> <a href="/tags/WiiU/" style="font-size: 10px;">WiiU</a> <a href="/tags/Windows-10/" style="font-size: 10px;">Windows 10</a> <a href="/tags/v2ray/" style="font-size: 20px;">v2ray</a> <a href="/tags/%E4%B8%BB%E6%9C%BA%E6%B8%B8%E6%88%8F%E8%A1%A5%E4%B8%81/" style="font-size: 10px;">主机游戏补丁</a> <a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 10px;">分享</a> <a href="/tags/%E5%A5%BD%E6%AD%8C%E6%8E%A8%E8%8D%90/" style="font-size: 10px;">好歌推荐</a> <a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 10px;">教程</a>
+    </div>
+    
+  </div>
+
+  
+</aside>
+    <div class="nexmoe-copyright">
+        &copy; 2021 redball
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        
+    </div>
+</div><!-- .nexmoe-drawer -->
+  </div>
+  <div id="nexmoe-content">
+    <div class="nexmoe-primary">
+        <div class="nexmoe-post">
+
+  <div class="nexmoe-post-right">
+    
+      <div class="nexmoe-fixed">
+        <div class="nexmoe-valign">
+            <div class="nexmoe-toc">
+                
+                
+                  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AD%A3%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">正文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E6%B3%A8%E5%86%8CHeroku%E8%B4%A6%E6%88%B7"><span class="toc-number">2.1.</span> <span class="toc-text">第一步:注册Heroku账户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E9%85%8D%E7%BD%AEv2ray"><span class="toc-number">2.2.</span> <span class="toc-text">第二步:配置v2ray</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E5%8A%A0%E9%80%9FV2ray"><span class="toc-number">2.3.</span> <span class="toc-text">第三步:加速V2ray</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E5%B0%8F%E6%AD%A5-%E5%88%9B%E5%BB%BAWorker"><span class="toc-number">2.3.1.</span> <span class="toc-text">第一小步:创建Worker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%B0%8F%E6%AD%A5-%E5%8A%A0%E9%80%9F"><span class="toc-number">2.3.2.</span> <span class="toc-text">第二小步:加速</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%80%E5%90%8E"><span class="toc-number">3.</span> <span class="toc-text">最后</span></a></li></ol>
+                
+            </div>
+        </div>
+      </div>
+    
+  </div>
+
+  <article>
+    
+        <div class="nexmoe-post-cover" style="padding-bottom: 66.66666666666666%;"> 
+            <img data-src="https://cdn.jsdelivr.net/gh/nexmoe/nexmoe.github.io@latest/images/cover/5c3aec85a4343.jpg" data-sizes="auto" alt="用Heroku创建一个专属于你的v2ray" class="lazyload">
+            <h1>用Heroku创建一个专属于你的v2ray</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta nexmoe-rainbow-fill" style="margin:10px 0!important;">
+    <a><i class="nexmoefont icon-calendar-fill"></i>2021年05月02日</a>
+    <a><i class="nexmoefont icon-areachart"></i>539 字</a>
+    <a><i class="nexmoefont icon-time-circle-fill"></i>大概 2 分钟</a>
+</div>
+
+    <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>先放一个效果图给大家看</p>
+<p><img data-fancybox="gallery" data-sizes="auto" data-src="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image1.jpg" alt="免费的能这样已经很不错了" class="lazyload"></p>
+<span id="more"></span>
+
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><h2 id="第一步-注册Heroku账户"><a href="#第一步-注册Heroku账户" class="headerlink" title="第一步:注册Heroku账户"></a>第一步:注册Heroku账户</h2><p><a target="_blank" rel="noopener" href="https://signup.heroku.com/">点我注册</a> 信息如图所示</p>
+<p><img src="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image2.jpg"></p>
+<h2 id="第二步-配置v2ray"><a href="#第二步-配置v2ray" class="headerlink" title="第二步:配置v2ray"></a>第二步:配置v2ray</h2><p><a target="_blank" rel="noopener" href="https://dashboard.heroku.com/new?template=https://github.com/bclswl0827/v2ray-heroku"><img data-fancybox="gallery" data-sizes="auto" data-src="https://www.herokucdn.com/deploy/button.png" alt="Deploy" class="lazyload"></a> 点击这个按钮然后以如图所示的设置即可。<a target="_blank" rel="noopener" href="https://www.uuidgenerator.net/version4">点我生成UUID</a>(注意保存这个UUID)然后点击Deploy App，然后等待一会，出现Manage App的时候就表示成功了。然后试连接(地址是”你的App Name,herokuapp.com”,端口443,Alter ID为64,协议为WS,跳过TLS证书验证)看看（Ping延迟Ping不出来属正常现象）</p>
+<p><img src="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image3.jpg"></p>
+<h2 id="第三步-加速V2ray"><a href="#第三步-加速V2ray" class="headerlink" title="第三步:加速V2ray"></a>第三步:加速V2ray</h2><p>链接上去后速度可能不太乐观，你可以使用Cloudflare的免费CDN加速来解决这一回事。</p>
+<p>注册Cloudflare账号略</p>
+<h3 id="第一小步-创建Worker"><a href="#第一小步-创建Worker" class="headerlink" title="第一小步:创建Worker"></a>第一小步:创建Worker</h3><p>登录Cloudflare后，点击右边的Worker,然后点击上方的创建Worker，然后把以下代码粘贴到代码栏，然后点击下方的保存并部署即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">addEventListener(</span><br><span class="line">    &quot;fetch&quot;, event &#x3D;&gt; &#123;</span><br><span class="line">        let url &#x3D; new URL(event.request.url);</span><br><span class="line">        url.hostname &#x3D; &quot;粘贴v2ray地址&quot;;</span><br><span class="line">        let request &#x3D; new Request(url, event.request);</span><br><span class="line">        event.respondWith(</span><br><span class="line">            fetch(request)</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h3 id="第二小步-加速"><a href="#第二小步-加速" class="headerlink" title="第二小步:加速"></a>第二小步:加速</h3><p>加速v2ray的前提是你要有一个属于自己的域名并且已经托管到Cloudflare了</p>
+<p>登录进cloudflare后，点击你的域名，然后再点击上边的Worker，然后点击添加路由.路由栏里填你想分配给你这个Worker的域名，格式为”example.域名/*”example替换成你想填的二级域名，域名替换成你的域名。然后点击保存即可<img src="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image4.jpg"></p>
+<p>然后点击上边的DNS，然后点击”添加记录”。名称为你刚刚填写的二级域名。IP为你填写的Cloudflare CDN IP。（高速IP我会放在最后）然后点击保存即可(注意:把代理状态调整为仅限DNS，否则会导致二次加速减慢速度)<img src="https://drive.redball1017.ga/blogimages/images/creat-a-v2ray-for-you/image5.jpg"></p>
+<p>最后记得把v2ray的地址换成你刚刚给Worker分配的网址即可</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>最后放出高速IP范围</p>
+<p>162.159.208.4-162.159.208.103</p>
+<p>162.159.209.4-162.159.209.103</p>
+<p>162.159.210.4-162.159.210.103</p>
+<p>162.159.211.4-162.159.211.103</p>
+<p>1.0.0.0-1.0.0.999</p>
+
+  </article>
+
+  
+    
+  <div class="nexmoe-post-copyright">
+    <strong>本文作者：</strong>redball<br>
+    <strong>本文链接：</strong><a href="https://blog.redball1017.ga/2021/05/02/creat-a-v2ray-for-you/" title="https:&#x2F;&#x2F;blog.redball1017.ga&#x2F;2021&#x2F;05&#x2F;02&#x2F;creat-a-v2ray-for-you&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;blog.redball1017.ga&#x2F;2021&#x2F;05&#x2F;02&#x2F;creat-a-v2ray-for-you&#x2F;</a><br>
+    
+      <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+    
+  </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+    
+        <a class="nexmoefont icon-appstore-fill -link" href="/categories/%E6%95%99%E7%A8%8B/">教程</a>
+    
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Heroku/" rel="tag">Heroku</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/v2ray/" rel="tag">v2ray</a>
+    
+</div>
+
+  <div class="nexmoe-post-footer">
+    <section class="nexmoe-comment">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.css">
+<div id="gitalk"></div>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.min.js"></script>
+<script type="text/javascript">
+    var gitalk = new Gitalk({
+        clientID: 'c69c043f4bd56eecf2a3',
+        clientSecret: '224774e626e5ec44542749391002781554f5e37c',
+        id: window.location.pathname,
+        repo: 'Blogpost',
+        owner: 'redball1017',
+        admin: 'redball1017',
+        proxy:'https://shielded-brushlands-08810.herokuapp.com/https://github.com/login/oauth/access_token'
+    })
+    gitalk.render('gitalk')
+</script>
+</section>
+  </div>
+</div>
+        <!--<div class="nexmoe-post-right">
+          <div class="nexmoe-fixed">
+            <div class="nexmoe-tool">
+              <a href="#nexmoe-content" class="toc-link" aria-label="回到顶部" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+            </div>
+          </div>
+        </div>-->
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/combine/npm/lazysizes@5.1.0/lazysizes.min.js,gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js,npm/mdui@0.4.3/dist/js/mdui.min.js?v=1"></script>
+<script>
+	hljs.initHighlightingOnLoad();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/gh/xtaodada/xtaodada.github.io@0.0.2/copy.js"></script>
+ 
+
+<script src="/js/app.js?v=1629351543132"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js"></script>
+<script>
+	$(".justified-gallery").justifiedGallery({
+		rowHeight: 160,
+		margins: 10,
+	});
+</script>
+
+  
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0EEYYNTDMV"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-0EEYYNTDMV');
+</script>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,7 +1,8 @@
 # This Repo
-## static from https://github.com/GitHub-Laziji/VBlog
-## lks from https://gitee.com/xiangjianan/lks
-## userElaina from https://github.com/userElaina/github-creeper-2-md 
+## static from https://github.com/GitHub-Laziji/VBlog //基于gits的Blog静态
+## lks from https://gitee.com/xiangjianan/lks //B站-LKs-推荐的应用集静态收集
+## userElaina from https://github.com/userElaina/github-creeper-2-md //userElaina的repo备份
+## redball1017 from https://github.com/redball1017/redball1017.github.io //redball1017的博客备份
 # Used Repo
 ## https://github.com/pigeonpig/alistonfly.io //在Flyio部署Alist
 ## https://github.com/valetzx/alllist //在Railwayo部署Alist
