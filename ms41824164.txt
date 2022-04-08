@@ -1,0 +1,5 @@
+﻿{
+  "Description": "Microsoft 365 的域所有权验证文件 - 放置在网站根目录中",
+  "Domain": "pigeonpig.github.io",
+  "Id": "2dd1c7af-929a-4528-8a17-12b417dd5cab"
+}
