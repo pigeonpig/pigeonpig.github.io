@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy Static
 
 on:
   push:
@@ -9,17 +9,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
           node-version: 20
-      - name: Build static site
-        run: npm run build:static
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+        if: false # no dependencies
+      - name: Generate static site
         env:
           API_BASE: ${{ secrets.API_BASE }}
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+        run: node scripts/export-static.mjs
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
