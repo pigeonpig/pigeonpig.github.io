@@ -15,13 +15,13 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci --ignore-scripts
-        if: true
+        if: false # no dependencies
       - name: Generate static site
         env:
           API_BASE: ${{ secrets.API_BASE }}
-        run: node scripts/export-static.mjs
+        run: node ./scripts/export-static.mjs
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.ASS_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
