@@ -1,27 +1,39 @@
-name: Build and Deploy Static
+name: Deploy Static Site to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  # Allow manual triggering of the workflow
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js (use appropriate version and cache dependencies)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18
+          cache: npm
+
+      # Step 3: Install project dependencies (if any)
       - name: Install dependencies
-        run: npm ci --ignore-scripts
-        if: false # no dependencies
-      - name: Generate static site
-        env:
-          API_BASE: ${{ secrets.API_BASE }}
-        run: node ./scripts/export-static.mjs
-      - name: Deploy to GitHub Pages
+        run: npm install
+
+      # Step 4: Build the project (prepare static files in dist/)
+      - name: Build static files
+        run: |
+          npm run build
+
+      # Step 5: Deploy the dist/ folder to the 'pages' branch for GitHub Pages
+      - name: Deploy to GitHub Pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          github_token: ${{ secrets.ASS_TOKEN }}
+          publish_dir: dist
+          publish_branch: pages
