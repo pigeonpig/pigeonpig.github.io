@@ -15,7 +15,7 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci --ignore-scripts
-        if: false # no dependencies
+        if: ture
       - name: Generate static site
         env:
           API_BASE: ${{ secrets.API_BASE }}
