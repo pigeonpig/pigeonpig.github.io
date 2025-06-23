@@ -4,8 +4,5 @@
   "type": "module",
   "dependencies": {
     "cheerio": "^1.0.0-rc.12"
-  },
-  "scripts": {
-    "build:static": "node scripts/build_static.js"
   }
 }
