@@ -1,10 +1,12 @@
-name: Deploy Static Site to GitHub Pages
+name: Deploy GitHub Pages
 
 on:
   push:
     branches: [ main ]
   # Allow manual triggering of the workflow
   workflow_dispatch:
+  schedule:
+    - cron: '12 14 * * *'
 
 jobs:
   build-and-deploy:
@@ -23,7 +25,10 @@ jobs:
 
       # Step 3: Install project dependencies (if any)
       - name: Install dependencies
-        run: npm install
+        run: |
+          git clone https://github.com/valetzx/flow-wx
+          cp flow-wx/* .
+          npm install
 
 
       # Step 4: Build the project (prepare static files in dist/)
