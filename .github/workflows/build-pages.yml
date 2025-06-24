@@ -35,7 +35,6 @@ jobs:
       - name: Build static files
         env:
           IMG_DOMAINS: ${{ secrets.IMG_DOMAINS }}
-          API_DOMAINS: ${{ secrets.API_DOMAINS }}
           IMG_CACHE: ${{ secrets.IMG_CACHE }}
         run: npm run build
       # Step 5: Deploy the dist/ folder to the 'pages' branch for GitHub Pages
