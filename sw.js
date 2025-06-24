@@ -1,4 +1,4 @@
-const IMG_CACHE = "";
+const IMG_CACHE = "images.weserv.nl";
 const CACHE_NAME = "wx-cache-v2";
 const CACHE_AGE = 6 * 24 * 60 * 60 * 1000;
 const TS_HEADER = "X-Cache-Timestamp";
