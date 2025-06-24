@@ -452,7 +452,7 @@
         attempt();
       }
       async function fetchWithFallback(path, options = {}) {
-        const isApi = path.startsWith('/api/wx') || path.startsWith('/api/wx.json') || path.startsWith('/api/daily') || path.startsWith('/a/');
+        const isApi = path.startsWith('/api/wx') || path.startsWith('/api/bil') || path.startsWith('/api/wx.json') || path.startsWith('/api/daily') || path.startsWith('/a/');
         const domains = isApi ? apiDomains : imgDomains;
         for (const d of domains) {
           try {
@@ -512,7 +512,7 @@
       let allItems = [];
       let currentPage = 0;
       let perPage = savedPerPage;
-      let selectedTag = '';
+      let selectedTags = [];
       let searchTerm = '';
       const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach((entry) => {
@@ -608,8 +608,11 @@
       function filterData(data) {
         const filtered = {};
         for (const [k, v] of Object.entries(data)) {
-          if (selectedTag && (!Array.isArray(v.tags) || !v.tags.includes(selectedTag))) {
-            continue;
+          if (selectedTags.length) {
+            const tags = Array.isArray(v.tags) ? v.tags : [];
+            if (!selectedTags.some((t) => tags.includes(t))) {
+              continue;
+            }
           }
           if (searchTerm && !k.includes(searchTerm)) {
             continue;
@@ -626,7 +629,7 @@
         renderPage();
         Array.from(tagList.querySelectorAll('button[data-tag]')).forEach((btn) => {
           btn.classList.remove('bg-primary', 'text-white', 'border-primary');
-          if (btn.dataset.tag === selectedTag) {
+          if (selectedTags.includes(btn.dataset.tag)) {
             btn.classList.add('bg-primary', 'text-white', 'border-primary');
           }
         });
@@ -664,13 +667,20 @@
         applyFilter();
       }
       async function fetchLatest() {
-        const res = await fetchWithFallback('/api/wx', {
-          headers: {
-            'x-skip-cache': '1'
-          },
+        const resWx = await fetchWithFallback('/api/wx', {
+          headers: { 'x-skip-cache': '1' },
         });
-        if (!res.ok) throw new Error('Network response was not ok');
-        return await res.json();
+        const dataWx = resWx.ok ? await resWx.json() : {};
+        let dataBil = {};
+        try {
+          const resBil = await fetchWithFallback('/api/bil', {
+            headers: { 'x-skip-cache': '1' },
+          });
+          if (resBil.ok) dataBil = await resBil.json();
+        } catch (e) {
+          console.error('加载 bilibili 失败:', e);
+        }
+        return Object.assign({}, dataWx, dataBil);
       }
       async function initGallery() {
         const cachedStr = localStorage.getItem('wxData');
@@ -713,7 +723,13 @@
         }
         const btn = e.target.closest('button[data-tag]');
         if (!btn) return;
-        selectedTag = btn.dataset.tag || '';
+        const tag = btn.dataset.tag;
+        if (!tag) return;
+        if (selectedTags.includes(tag)) {
+          selectedTags = selectedTags.filter((t) => t !== tag);
+        } else {
+          selectedTags.push(tag);
+        }
         applyFilter();
       });
       moreBtn.addEventListener('click', (e) => {
