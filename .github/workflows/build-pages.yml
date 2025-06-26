@@ -38,6 +38,7 @@ jobs:
           IMG_CACHE: ${{ secrets.IMG_CACHE }}
         run: |
           npm run build
+          cd dist/api
           wget $IMG_DOMAINS/api/wx
       # Step 5: Deploy the dist/ folder to the 'pages' branch for GitHub Pages
       - name: Deploy to GitHub Pages branch
