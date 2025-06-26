@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         run: |
           git clone https://github.com/valetzx/flow-wx
-          cp flow-wx/* .
+          cp -r flow-wx/* .
           npm install
 
 
