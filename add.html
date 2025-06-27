@@ -53,7 +53,7 @@
     </div>
     <div id="gistEditModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
       <div class="bg-card text-on-surface rounded-xl w-11/12 max-w-3xl h-[80vh] overflow-auto relative p-4 flex flex-col gap-2">
-        <textarea id="gistEditTextarea" class="flex-1 w-full border rounded p-2 bg-surface text-on-surface"></textarea>
+        <textarea id="gistEditTextarea" class="flex-1 w-full p-2 bg-[rgba(var(--on-surface),0.05)] rounded-lg text-on-surface"></textarea>
         <div class="flex justify-end gap-2 mt-2">
           <button id="cancelEditGist" class="px-3 py-1 rounded bg-gray-500 text-white">取消</button>
           <button id="saveEditGist" class="px-3 py-1 rounded bg-primary text-white">保存</button>
@@ -74,7 +74,6 @@
       const closeSettings = document.getElementById('closeSettings');
       const applySettings = document.getElementById('applySettings');
       const loadGistsBtn = document.getElementById('loadGistsBtn');
-      const githubTokenInput = document.getElementById('githubTokenInput');
       const columnCountInput = document.getElementById('columnCountInput');
       const perPageInput = document.getElementById('perPageInput');
       const multiTagToggle = document.getElementById('multiTagToggle');
@@ -93,7 +92,6 @@
       const isMobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
       const savedToken = localStorage.getItem('githubToken') || '';
-      if (githubTokenInput) githubTokenInput.value = savedToken;
       if (savedToken) {
         loadGistsBtn.classList.remove('hidden');
         newGistBtn.classList.remove('hidden');
@@ -312,7 +310,7 @@
         const content = prompt('内容') || '';
         const token = localStorage.getItem('githubToken');
         if (!token) {
-          alert('请在设置中填写 GitHub Token');
+          alert('请在管理页面填写 GitHub Token');
           return;
         }
         try {
@@ -380,7 +378,7 @@
         const content = gistEditTextarea.value;
         const token = localStorage.getItem('githubToken');
         if (!token) {
-          alert('请在设置中填写 GitHub Token');
+          alert('请在管理页面填写 GitHub Token');
           return;
         }
         try {
@@ -418,7 +416,7 @@
         if (!confirm('确定删除该文件？')) return;
         const token = localStorage.getItem('githubToken');
         if (!token) {
-          alert('请在设置中填写 GitHub Token');
+          alert('请在管理页面填写 GitHub Token');
           return;
         }
         try {
@@ -443,13 +441,20 @@
       async function fetchGists() {
         const token = localStorage.getItem('githubToken');
         if (!token) {
-          alert('请在设置中填写 GitHub Token');
+          alert('请在管理页面填写 GitHub Token');
           return;
         }
         const progress = document.getElementById('gistsProgress');
+        let fakeProgress = 0;
+        let fakeTimer = null;
         if (progress) {
           progress.style.width = '0%';
           progress.style.opacity = '1';
+          fakeTimer = setInterval(() => {
+            fakeProgress = Math.min(fakeProgress + 0.5, 60);
+            progress.style.width = fakeProgress + '%';
+            if (fakeProgress >= 60) clearInterval(fakeTimer);
+          }, 100);
         }
         try {
           const res = await fetch('https://api.github.com/gists', {
@@ -457,6 +462,8 @@
           });
           if (!res.ok) throw new Error('network');
           const data = await res.json();
+          if (progress) clearInterval(fakeTimer);
+          const base = fakeProgress;
           let done = 0;
           const total = data.length || 1;
           for (const g of data) {
@@ -493,7 +500,10 @@
               }
             }
             done++;
-            if (progress) progress.style.width = `${Math.min(100, (done / total) * 100)}%`;
+            if (progress) {
+              const width = Math.min(100, base + (done / total) * (100 - base));
+              progress.style.width = width + '%';
+            }
           }
             save();
             updateTagsAndRender();
@@ -556,13 +566,14 @@
       });
       saveEditGist.addEventListener('click', saveEdit);
       deleteGistBtn.addEventListener('click', deleteGist);
-      gistEditModal.addEventListener('click', e => {
-        if (e.target === gistEditModal) {
-          editIndex = null;
-          gistEditModal.classList.add('hidden');
-          gistEditModal.classList.remove('flex', 'show');
-        }
-      });
+      // 点击遮罩层时不再关闭编辑弹窗，避免误触
+      // gistEditModal.addEventListener('click', e => {
+      //   if (e.target === gistEditModal) {
+      //     editIndex = null;
+      //     gistEditModal.classList.add('hidden');
+      //     gistEditModal.classList.remove('flex', 'show');
+      //   }
+      // });
       multiTagToggle.addEventListener('change', () => {
         allowMultiTags = multiTagToggle.checked;
         localStorage.setItem('multiTags', allowMultiTags ? 'true' : 'false');
@@ -577,17 +588,6 @@
         gallery.style.columnCount = String(cols);
         localStorage.setItem('columnCount', String(cols));
         localStorage.setItem('perPage', String(perPage));
-        if (githubTokenInput) {
-          const t = githubTokenInput.value.trim();
-          localStorage.setItem('githubToken', t);
-          if (t) {
-            loadGistsBtn.classList.remove('hidden');
-            newGistBtn.classList.remove('hidden');
-          } else {
-            loadGistsBtn.classList.add('hidden');
-            newGistBtn.classList.add('hidden');
-          }
-        }
         settingsPanel.classList.add('hidden');
         settingsPanel.classList.remove('flex', 'show');
       });
