@@ -40,7 +40,8 @@ jobs:
         run: |
           npm run build
           cd dist/api
-          wget "$API_DOMAINS/api/wx"
+          rm -rf wx
+          wget ${API_DOMAINS}api/wx
       # Step 5: Deploy the dist/ folder to the 'pages' branch for GitHub Pages
       - name: Deploy to GitHub Pages branch
         uses: peaceiris/actions-gh-pages@v3
