@@ -67,7 +67,8 @@
       const gist = data.find(g => g.description === 'flow-inject');
       if (!gist) return;
       const cache = await caches.open('wx-cache-v2');
-      const list = [];
+      const paths = [];
+
       for (const [name, f] of Object.entries(gist.files)) {
         const r = await fetch(f.raw_url);
         if (!r.ok) continue;
@@ -76,20 +77,22 @@
         if (name.endsWith('.html')) type = 'text/html';
         else if (name.endsWith('.css')) type = 'text/css';
         else if (name.endsWith('.js')) type = 'text/javascript';
-        await cache.put('/' + name, new Response(text, {
+        const path = '/' + name;
+        await cache.put(path, new Response(text, {
           headers: {
             'Content-Type': `${type}; charset=utf-8`,
             'X-Cache-Timestamp': Date.now().toString()
           }
         }));
-        list.push('/' + name);
+        paths.push(path);
       }
-      await cache.put('/flowInject.json', new Response(JSON.stringify(list), {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8',
-          'X-Cache-Timestamp': Date.now().toString()
-        }
-      }));
+      localStorage.setItem('injectFlow', paths.join(','));
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'injectFlow',
+          paths
+        });
+      }
     } catch (e) {
       console.error('preload', e);
     }
