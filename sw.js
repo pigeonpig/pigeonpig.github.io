@@ -45,6 +45,10 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(cacheThenNetwork(event.request));
   } else if (url.pathname === "/add") {
     event.respondWith(cacheThenNetwork(event.request));
+  } else if (url.pathname === "/update") {
+    event.respondWith(cacheOnly(event.request));
+  } else if (/^\/web\.(html|css|js)$/.test(url.pathname)) {
+    event.respondWith(cacheOnly(event.request));
   }
 });
 
@@ -136,4 +140,10 @@ async function cacheThenNetwork(request) {
     if (cached) return cached;
     throw err;
   }
+}
+
+async function cacheOnly(request) {
+  const cache = await caches.open(CACHE_NAME);
+  const res = await cache.match(request);
+  return res || new Response("not found", { status: 404 });
 }
