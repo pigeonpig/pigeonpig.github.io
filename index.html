@@ -156,7 +156,18 @@ document.addEventListener('DOMContentLoaded', () => {
       perPageInput.value = String(savedPerPage);
       const multiTagsSaved = localStorage.getItem('multiTags') === 'true';
       multiTagToggle.checked = multiTagsSaved;
-      gallery.style.columnCount = String(initialCols);
+      let columns = [];
+      function setupColumns(count) {
+        gallery.innerHTML = '';
+        columns = [];
+        for (let i = 0; i < count; i++) {
+          const col = document.createElement('div');
+          col.className = 'masonry-column';
+          gallery.appendChild(col);
+          columns.push(col);
+        }
+      }
+      setupColumns(initialCols);
       if (isMobile) {
         document.body.classList.add('mobile');
         navEl.classList.add('mobile');
@@ -313,14 +324,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       function renderPage() {
-        gallery.innerHTML = '';
+        columns.forEach(col => col.innerHTML = '');
         const end = (currentPage + 1) * perPage;
         const items = allItems.slice(0, end);
-        items.forEach((item) => {
+        items.forEach((item, idx) => {
+          const col = columns[idx % columns.length];
           if (item.type === 'title') {
-            gallery.insertAdjacentHTML('beforeend', item.html);
+            col.insertAdjacentHTML('beforeend', item.html);
           } else if (item.type === 'image') {
-            gallery.appendChild(createImage(item.src, item.alt));
+            col.appendChild(createImage(item.src, item.alt));
           }
         });
         if (end >= allItems.length) {
@@ -334,6 +346,20 @@ document.addEventListener('DOMContentLoaded', () => {
         rawData = data;
         renderTags(collectTags(data));
         applyFilter();
+      }
+
+      async function getSharedData(key) {
+        if (window.sharedStorage && typeof window.sharedStorage.get === 'function') {
+          try {
+            const val = await window.sharedStorage.get(key);
+            if (val) return JSON.parse(val);
+          } catch {}
+        }
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          try { return JSON.parse(raw); } catch {}
+        }
+        return null;
       }
       async function fetchLatest() {
         const resWx = await fetchWithFallback('/api/wx', {
@@ -361,14 +387,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       async function initGallery() {
         if (await hasWxCache()) hideSplash(true);
+        const pref = localStorage.getItem('dataSource') || 'wxData';
+        const wxLocal = await getSharedData('wxLocal');
+        const biLocal = await getSharedData('biLocal');
+        const combinedLocal = Object.assign({}, wxLocal || {}, biLocal || {});
+
         const cachedStr = localStorage.getItem('wxData');
         let cached;
         if (cachedStr) {
-          try {
-            cached = JSON.parse(cachedStr);
-          } catch {}
+          try { cached = JSON.parse(cachedStr); } catch {}
         }
-        if (cached) {
+
+        if (wxLocal) {
+          applyData(combinedLocal);
+        } else if (pref === 'biLocal' && biLocal) {
+          applyData(biLocal);
+        } else if (pref === 'wxLocal' && wxLocal) {
+          applyData(wxLocal);
+        } else if (cached) {
           applyData(cached);
         }
         try {
@@ -376,7 +412,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const latestStr = JSON.stringify(latest);
           if (!cachedStr) {
             localStorage.setItem('wxData', latestStr);
-            applyData(latest);
+            if (!wxLocal && pref === 'wxData') applyData(latest);
           } else if (latestStr !== cachedStr) {
             localStorage.setItem('wxDataNew', latestStr);
             showDot();
@@ -432,7 +468,7 @@ document.addEventListener('DOMContentLoaded', () => {
       applySettings.addEventListener('click', () => {
         const cols = Math.max(1, parseInt(columnCountInput.value) || 1);
         perPage = Math.max(1, parseInt(perPageInput.value) || 1);
-        gallery.style.columnCount = String(cols);
+        setupColumns(cols);
         localStorage.setItem('columnCount', String(cols));
         localStorage.setItem('perPage', String(perPage));
         currentPage = 0;
