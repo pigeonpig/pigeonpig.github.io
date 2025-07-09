@@ -7,26 +7,7 @@
     "tags": [
       "B站"
     ],
-    "abbrlink": "b1c"
-  },
-  "室内设计2023作品合集": {
-    "date": "2024-09-05 22:36",
-    "description": "▁▁",
-    "images": [
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK9dGCyialogXywnf8xsxAeLwltvP7MsI0C7GjBF9p59EiacALwCib6YGGA/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKswibkls0uU2iczvedeia18EVSZOym26lETTkKYxuNmFaiafP8X48HGTCuQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKfRptKtvRP5mpsU6jB2siaM8Ure3fts3VUQ5mJ9Ygd0uw4PIicOfRmesQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKTiaMYRhJ1icicrHsTlNAibccpehRddwmPIeDBhbLfa76yfUiaJlAng41jqA/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKNXU90NbMd2Aq2g7e8KUBVuUrp8Kcia29eMfeRaJljialaGj0UASALkCQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK63ia4yia1BLvUrpYk5Bj6Qlfm2GwX0Ifs8tKNlicMJgGBokBia3eIryF4Q/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKRsBTwR7x2STmAaQUgCXRq1zYZGk0gQ50X9XYAjIqkGZ2oDohsnicULQ/640"
-    ],
-    "url": "https://mp.weixin.qq.com/s/d-h4lk1eHbUvUV5HOZlb-Q",
-    "tags": [
-      "日常",
-      "设计"
-    ],
-    "abbrlink": "1a1b"
+    "abbrlink": "test1"
   },
   "太原致朴茶肆 / 斑斓空间设计": {
     "date": "2025-06-19 21:13",
@@ -175,37 +156,6 @@
     ],
     "abbrlink": "1a1d"
   },
-  "Ai合集1": {
-    "date": "2025-03-06 11:52",
-    "description": "首发：创业邦，策划：KK，制图：邬海雯ChatGPT风靡全球，人人可用！",
-    "images": [
-      "https://mmbiz.qpic.cn/mmbiz_jpg/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6OnWE5Yr5NgibmxdThJbL2xBSBIWBjQ3J6d5UrzTrUujx78h8cJRxTX7tg/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6OnBI30cTj2HzXwmscW07Uhdwh5IOVGibVN78aibJqBs0OhWiam1yqWZDDFg/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6OnKH3uKmibFkGH4Q5dGibQMzRlTHiaw8LZRgmXuPicPhqC5bZN8QTnxZk6Gw/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6On8Yg8VF5OyQCray9ibsDZbSMpcq4S5WMqDdttGicy44ebSXe3XllEKfog/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6OnnjMLlgHtlzW7juRwAt5PwRv3bHSnOcJHFTgnuOZna99A41KufD3lCg/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/GaCVyRow8UTzHEq5YNPzBCCzXcmibd6OncbDqC3xHK3zUeyAHGSIhDgRn0FvdvMD3yjvKVOAnYBypb5DrubfJ7g/640"
-    ],
-    "url": "https://mp.weixin.qq.com/s/lV14lI8O67VN6cEazaqIOA",
-    "tags": [
-      "AI",
-      "科技",
-      "分享"
-    ],
-    "abbrlink": "1a1e"
-  },
-  "Ai合集2": {
-    "date": "2025-04-14 20:50",
-    "description": "",
-    "images": [],
-    "url": "https://mp.weixin.qq.com/s/uIeij0G6M2rkq1JAuP4Xcw",
-    "tags": [
-      "AI",
-      "科技",
-      "分享"
-    ],
-    "abbrlink": "1a1f"
-  },
   "Cloudflare Workers 现已支持更多 NPM 包：结合 polyfill 和原生代码以支持 Node.js API": {
     "description": "",
     "images": [
@@ -231,7 +181,30 @@
       "科技",
       "教程"
     ],
-    "abbrlink": "1a1g"
+    "abbrlink": "cloudflarenotes"
+  },
+  "CNB代码平台注册与使用教程": {
+    "description": "快来白嫖你的开发平台吧！",
+    "images": [
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0IHUR6xBubchcxoz8VuQTClztrCoeLIuZLmiaqbOuy9kkwjoo7hyrdTw/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0GhmhhqSom4NiamPSO3fG3RtZSjWVM4UBDsrst7z9ava1eXDwd5XUgCA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0rORDZjxFWj5CLEXXTzVOlunx3qEJKqP8l4jesccfkhQmtKTrQkaYLQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq02JkDZEcUNCYUUw2WicCvEU7U0SISAvicexopria1BTzdMbWGjSUvIGUbg/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0jeWxlhicbvEl3cObDvFXfs0y9IUYicnfS17icBzhmdnaSkDsQTtIeLFRA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq03Ijoh9cLiaZUxAzNOYRLZMpj5hYz4SjBlbFKdq5FIXeHRcicsBDYZKMA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0pBibE0SdTreia6SL9YcZcQjbibgfKdJUwC4qVhKND2lSHcLOrSRDkovyA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0W5EUibYcmRFqAlqbPiaiamb0MQoQ0NDiavMjUibcMw1O5NaNkanPamRRNEQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0sIoQcnYXyOSkraSRByng6n9Lic9tIThwEliaTgcviatEia5NPmbqnPsRYg/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0ODOncZOFlRUqXuNMdiaicHGNnwsZIw9ic4F4DQCN3XSwoecic6GD9EzGRw/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0ygAcyaXFLCjXuL6aMXqCCGwsUXZia4icszXSkT2uthmPCpWjTERlUdkA/640"
+    ],
+    "url": "https://mp.weixin.qq.com/s/c8cJ_d_DwaVlLYFjJsnZyg",
+    "tags": [
+      "白嫖",
+      "git",
+      "教程"
+    ],
+    "abbrlink": "cnbuse"
   },
   "GenP": {
     "date": "2025-06-24",
@@ -241,6 +214,25 @@
     "tags": [
       "资源下载"
     ],
-    "abbrlink": "b1a"
+    "abbrlink": "genpyyds"
+  },
+  "室内设计2023作品合集": {
+    "date": "2024-09-05 22:36",
+    "description": "▁▁",
+    "images": [
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK9dGCyialogXywnf8xsxAeLwltvP7MsI0C7GjBF9p59EiacALwCib6YGGA/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKswibkls0uU2iczvedeia18EVSZOym26lETTkKYxuNmFaiafP8X48HGTCuQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKfRptKtvRP5mpsU6jB2siaM8Ure3fts3VUQ5mJ9Ygd0uw4PIicOfRmesQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKTiaMYRhJ1icicrHsTlNAibccpehRddwmPIeDBhbLfa76yfUiaJlAng41jqA/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKNXU90NbMd2Aq2g7e8KUBVuUrp8Kcia29eMfeRaJljialaGj0UASALkCQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK63ia4yia1BLvUrpYk5Bj6Qlfm2GwX0Ifs8tKNlicMJgGBokBia3eIryF4Q/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKRsBTwR7x2STmAaQUgCXRq1zYZGk0gQ50X9XYAjIqkGZ2oDohsnicULQ/640"
+    ],
+    "url": "https://mp.weixin.qq.com/s/d-h4lk1eHbUvUV5HOZlb-Q",
+    "tags": [
+      "日常",
+      "设计"
+    ],
+    "abbrlink": "indoordesign"
   }
 }
