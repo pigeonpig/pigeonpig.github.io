@@ -9,6 +9,25 @@
     ],
     "abbrlink": "test1"
   },
+  "室内设计2023作品合集": {
+    "date": "2024-09-05 22:36",
+    "description": "▁▁",
+    "images": [
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK9dGCyialogXywnf8xsxAeLwltvP7MsI0C7GjBF9p59EiacALwCib6YGGA/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKswibkls0uU2iczvedeia18EVSZOym26lETTkKYxuNmFaiafP8X48HGTCuQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKfRptKtvRP5mpsU6jB2siaM8Ure3fts3VUQ5mJ9Ygd0uw4PIicOfRmesQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKTiaMYRhJ1icicrHsTlNAibccpehRddwmPIeDBhbLfa76yfUiaJlAng41jqA/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKNXU90NbMd2Aq2g7e8KUBVuUrp8Kcia29eMfeRaJljialaGj0UASALkCQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK63ia4yia1BLvUrpYk5Bj6Qlfm2GwX0Ifs8tKNlicMJgGBokBia3eIryF4Q/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKRsBTwR7x2STmAaQUgCXRq1zYZGk0gQ50X9XYAjIqkGZ2oDohsnicULQ/640"
+    ],
+    "url": "https://mp.weixin.qq.com/s/d-h4lk1eHbUvUV5HOZlb-Q",
+    "tags": [
+      "日常",
+      "设计"
+    ],
+    "abbrlink": "1indoordesign"
+  },
   "太原致朴茶肆 / 斑斓空间设计": {
     "date": "2025-06-19 21:13",
     "description": "",
@@ -51,7 +70,7 @@
       "案例",
       "设计"
     ],
-    "abbrlink": "1a1c"
+    "abbrlink": "2a1c"
   },
   "UCE 右见设计 | CEO PRIVE 自然而然": {
     "date": "2025-06-02 20:50",
@@ -154,7 +173,7 @@
       "案例",
       "设计"
     ],
-    "abbrlink": "1a1d"
+    "abbrlink": "2a1d"
   },
   "Cloudflare Workers 现已支持更多 NPM 包：结合 polyfill 和原生代码以支持 Node.js API": {
     "description": "",
@@ -215,24 +234,5 @@
       "资源下载"
     ],
     "abbrlink": "genpyyds"
-  },
-  "室内设计2023作品合集": {
-    "date": "2024-09-05 22:36",
-    "description": "▁▁",
-    "images": [
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK9dGCyialogXywnf8xsxAeLwltvP7MsI0C7GjBF9p59EiacALwCib6YGGA/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKswibkls0uU2iczvedeia18EVSZOym26lETTkKYxuNmFaiafP8X48HGTCuQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKfRptKtvRP5mpsU6jB2siaM8Ure3fts3VUQ5mJ9Ygd0uw4PIicOfRmesQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKTiaMYRhJ1icicrHsTlNAibccpehRddwmPIeDBhbLfa76yfUiaJlAng41jqA/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKNXU90NbMd2Aq2g7e8KUBVuUrp8Kcia29eMfeRaJljialaGj0UASALkCQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicK63ia4yia1BLvUrpYk5Bj6Qlfm2GwX0Ifs8tKNlicMJgGBokBia3eIryF4Q/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYd4Lu5ToWRYJl7U7I2xbsicKRsBTwR7x2STmAaQUgCXRq1zYZGk0gQ50X9XYAjIqkGZ2oDohsnicULQ/640"
-    ],
-    "url": "https://mp.weixin.qq.com/s/d-h4lk1eHbUvUV5HOZlb-Q",
-    "tags": [
-      "日常",
-      "设计"
-    ],
-    "abbrlink": "indoordesign"
   }
 }
