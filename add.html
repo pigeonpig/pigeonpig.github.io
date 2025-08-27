@@ -390,10 +390,39 @@
         updateTagsAndRender();
       }
 
+      function getRandomColor() {
+        return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+      }
+
+      function createImage(src, alt) {
+        const img = document.createElement('img');
+        img.className = 'w-full rounded-t-2xl object-cover hover:opacity-90 transition-opacity aspect-video';
+        img.src = src;
+        img.alt = alt;
+        img.loading = 'lazy';
+        const randomHeight = 180 + Math.random() * 120;
+        img.style.height = `${randomHeight}px`;
+        img.style.backgroundColor = getRandomColor();
+        img.style.minHeight = '120px';
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.5s';
+        img.addEventListener('load', () => {
+          img.style.opacity = '1';
+          img.style.backgroundColor = '';
+          img.style.minHeight = '';
+        });
+        return img;
+      }
+
       function createCard(item, index) {
         const wrapper = document.createElement('div');
         wrapper.className = 'masonry-item rounded-2xl shadow overflow-hidden flex flex-col';
         wrapper.style.setProperty('--card-height', (item.height || 280) + 'px');
+        if (Array.isArray(item.images) && item.images.length > 0) {
+          const imgSrc = item.images[Math.floor(Math.random() * item.images.length)];
+          const img = createImage(imgSrc, item.title);
+          wrapper.appendChild(img);
+        }
         const text = document.createElement('div');
         const cardHeight = item.height || 280;
         text.className = 'card-content p-5 flex flex-col gap-2 no-scrollbar';
@@ -900,6 +929,7 @@
 
       async function loadComments() {
         const apiUrl = `https://cnbapi.haorwen.top/wss/apps/cnb-room/-/issues/3/comments?page=1&page_size=20`;
+        const existingIds = new Set(cards.filter(c => c.commentId).map(c => c.commentId));
         try {
           const res = await fetch(apiUrl, {
             method: 'GET',
@@ -910,14 +940,29 @@
           });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           const data = await res.json();
+          let updated = false;
           data.forEach(c => {
-            cards.push({
-              title: c.author?.nickname || c.author?.username || '',
-              description: c.body,
-              tags: ['评论']
+            if (existingIds.has(c.id)) return;
+            let body = c.body || '';
+            const images = [];
+            body = body.replace(/<img(?=[^>]*class="[^"]*cnb-md-image__upload[^"]*")(?=[^>]*src="([^"]+)")[^>]*>/g, (_, src) => {
+              images.push(`https://images.weserv.nl?url=https://cnb.cool${src}`);
+              return '';
             });
+            body = body.replace(/<[^>]+>/g, '');
+            cards.push({
+              commentId: c.id,
+              title: c.author?.nickname || c.author?.username || '',
+              description: body.trim(),
+              tags: ['评论'],
+              images
+            });
+            updated = true;
           });
-          updateTagsAndRender();
+          if (updated) {
+            save();
+            updateTagsAndRender();
+          }
         } catch (err) {
           console.error('加载评论失败', err);
         }
