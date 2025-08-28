@@ -214,25 +214,6 @@
     ],
     "abbrlink": "cnbdeepseekr1"
   },
-  "告别镜像下载慢！一个简单又强大的 Docker 镜像加速方案": {
-    "date": "2025-08-04",
-    "description": "众所周知，Docker 已成为现代开发者的“标配”工具。然而，由于 Docker 官方镜像仓库位于境外，国内开发者经常在拉取镜像时遇到下载缓慢甚至失败的问题……",
-    "images": [
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjp8c7roSUmINcTYzEUZiafu1SvQJ8bz4mh4A0STCAPqmdPAjiaa6utaAQ/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjWp1M1S1CQHictC9rPictsCmvLQAMxGLEWT09ETxdz7X7t1RAgZgIP4Ww/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjXiconmFJS83kfFaYZv0xbqa39DTDxFtygnia2f6XT8R4Tz11aRLcv8Lg/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjmrfba7azONhTBJIibB3wKZaYf7Cjjr25ViaM1vdUmNAra0pzW1qrZ7Cg/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPj8NOlshUpZo24WwSicf09j7OD0MzAb1AKdYMAaBbn1TdD5pf2YicnEJPw/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjhRicxRLQgVBJBCVW2ic8eLicLPcfJJjOMtITjCJApYwczYFqiaNMgIFynw/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_png/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPj5g1IASxbYS3v6BUbH4NFtRZfJ0pAc1PZ82btBmMHuf4bREl6wYKr1w/640",
-      "https://mmecoa.qpic.cn/sz_mmecoa_jpg/7NYnSaAjne3GpUuFQkDGaBsibwuoeSyPjJymcRhxzRvuIyEZpBFAGFccaUGRaNNh2UWicRN52Nx9VQ9kbKhErZVQ/640"
-    ],
-    "url": "https://mp.weixin.qq.com/s/yazKOUOwHl9nOHh--Ed7Eg",
-    "tags": [
-      "CNB平台精选"
-    ],
-    "abbrlink": "cnbdockerfsat"
-  },
   "CNB代码平台注册与使用教程": {
     "description": "快来白嫖你的开发平台吧！",
     "images": [
