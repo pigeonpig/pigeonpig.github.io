@@ -3,10 +3,5 @@
     "name": "计算器",
     "file": "calculator.html",
     "show": true
-  },
-  {
-    "name": "小红书",
-    "file": "xiaohongshu.html",
-    "show": false
   }
 ]
