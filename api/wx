@@ -175,6 +175,35 @@
     ],
     "abbrlink": "2a1d"
   },
+  "【AI黑科技】零代码打造私人智能知识库！CNB知识库+RAG实战指南！！": {
+    "date": "2025-09-08 08:00",
+    "description": "▁▁",
+    "images": [
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkndV8N9IvrbPCVxqoSMomTCl6Zy1CmKoMUcHQDSH2ktqywKhpCxtNcw/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkzJX66IJh725xmxsEWQHwpwSe5xyn1GJHEGCK7uY8Ae9813pBoFUH2w/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmk01CroCjEibf3fFJlGgpsDeSVzFMLmasr0qpxYRSerjedDe2njvKeMRA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkE3R6yF7jBG68GopNBh62Npk546O0nPvmXNPfmibtunrv8rLSCNVtNoA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkxsjjDibGOUppRZCaVLBvdywrBgQjPyXCRaWgou1BSX0Hmc6AHXfLtow/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkHNVNTe2xtZ7Cia93w9Sja8iagibVAqAezA21MibrQXoNAtGGic2mibCLfuGA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkb0XgwBB0V5icfBWs5ZQib6vN9icquwfHulgWAFfJe7BFdA0b59ypI9cmQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmk5fkqI110V0zGg6AAwcnGiaIQQmCyMYmaXpFAS2EBDibJ2Cl1vKWBXBbA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkg3fEC9r58DPaMH06ibg395T0vwZE6gFeZsCicafm0ibDicpdWeAK1IQF8A/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkysARlEUXHpdn79wvNtr3NuNyPRib8ic47cqIpiaXLA273wK4Sv2a6KEUA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkFu09pdBv8vcvANo4J0qUrwQsaznPBibfmIDnu8hOLNXbN8RDtAZGYMA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkaA6kuG1ypBAmX25ibAIFIymuJiaeyk3LYibLcibUzibpOQUDnvecaemJdmA/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkrLE16raKLhCgmlViawelNQDhfmuzIVOWm2ENcZcKaB9N6VymktOgqMg/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkNScJsu11ehtRS9Pd88X46c63aDYLicuwccfUHC9D4M3piaFPk3vYlJOg/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkms1icjEtDw5EvMVzuKViaFvhiaoNIX8jeQ4X2QST747H1v4Njdr9UjObQ/640",
+      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYcicBydppdoicaTry1MxzGNmkO3WvelZv0iaBTHHUeJPadk0XR4lKKT3mP9iaszia1R7D6cpsC4ZEHicarA/640",
+      "https://mmecoa.qpic.cn/sz_mmecoa_jpg/7NYnSaAjne1xG7zRC7OibmIxELkTnd41iaeZHpE7k9jJ9ic5fNvJ6IaqjANNR3vITLtub4MwqZcXbwLPBMumd0LQQ/640"
+    ],
+    "url": "https://mp.weixin.qq.com/s/AMPfaePM4XTKzVQiMqD87g",
+    "tags": [
+      "CNB平台精选",
+      "教程"
+    ],
+    "abbrlink": "argcnb"
+  },
   "Cloudflare Workers 现已支持更多 NPM 包：结合 polyfill 和原生代码以支持 Node.js API": {
     "description": "",
     "images": [
@@ -232,29 +261,6 @@
       "CNB平台精选"
     ],
     "abbrlink": "cnbdockerfsat"
-  },
-  "CNB代码平台注册与使用教程": {
-    "description": "快来白嫖你的开发平台吧！",
-    "images": [
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0IHUR6xBubchcxoz8VuQTClztrCoeLIuZLmiaqbOuy9kkwjoo7hyrdTw/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0GhmhhqSom4NiamPSO3fG3RtZSjWVM4UBDsrst7z9ava1eXDwd5XUgCA/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0rORDZjxFWj5CLEXXTzVOlunx3qEJKqP8l4jesccfkhQmtKTrQkaYLQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq02JkDZEcUNCYUUw2WicCvEU7U0SISAvicexopria1BTzdMbWGjSUvIGUbg/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0jeWxlhicbvEl3cObDvFXfs0y9IUYicnfS17icBzhmdnaSkDsQTtIeLFRA/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq03Ijoh9cLiaZUxAzNOYRLZMpj5hYz4SjBlbFKdq5FIXeHRcicsBDYZKMA/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0pBibE0SdTreia6SL9YcZcQjbibgfKdJUwC4qVhKND2lSHcLOrSRDkovyA/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0W5EUibYcmRFqAlqbPiaiamb0MQoQ0NDiavMjUibcMw1O5NaNkanPamRRNEQ/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0sIoQcnYXyOSkraSRByng6n9Lic9tIThwEliaTgcviatEia5NPmbqnPsRYg/640",
-      "https://mmbiz.qpic.cn/mmbiz_jpg/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0ODOncZOFlRUqXuNMdiaicHGNnwsZIw9ic4F4DQCN3XSwoecic6GD9EzGRw/640",
-      "https://mmbiz.qpic.cn/mmbiz_png/icjnibUJib8qYeY5QgibrMknY1l9ib0yicGTq0ygAcyaXFLCjXuL6aMXqCCGwsUXZia4icszXSkT2uthmPCpWjTERlUdkA/640"
-    ],
-    "url": "https://mp.weixin.qq.com/s/c8cJ_d_DwaVlLYFjJsnZyg",
-    "tags": [
-      "白嫖",
-      "git",
-      "教程"
-    ],
-    "abbrlink": "cnbuse"
   },
   "GenP": {
     "date": "2025-06-24",
