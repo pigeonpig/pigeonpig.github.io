@@ -256,6 +256,33 @@
     ],
     "abbrlink": "argcnb"
   },
+  "Cloudflare Workers 现已支持更多 NPM 包：结合 polyfill 和原生代码以支持 Node.js API": {
+    "description": "",
+    "images": [
+      "https://mmbiz.qpic.cn/sz_mmbiz_jpg/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJuy5Wdr2RblUEqZJNodIpjMTY9IMgMlfrwuopLqNUbvUic7iaQRahStqw/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJKy0yFMvl96lKEHasnPb3T49odXIjGTFsILsymIQOwbexYNIlmklL5A/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJoglGMFXibH8ibID4UyC11Sucel14YVNFB9Ao6O4DBdeVUbbEqnfkbW1Q/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJ3HI6ZagSPvHXL2fAWiblaiblT4KDcGgTjXd5QkplQE3sPYZlVOkkH0KQ/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJsQR4Dk4xmSaiaInHkdTgehJfCQhAE8EeEKap4TuZ9VQBfeLjIATh4kg/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJsnRtrfFdqCT8c1pwaiaO8YtvcqiaoozHDugIWficZgGMrYmvlJEL7gSDg/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJmFLp981tjia4puWeSj1whqJ4rWwSia3Z1Jm1LFU6Y4h6ksUxUMjAA3kg/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJ4vchF119zg7OpkuVFT5YzPVrVDcorGiboeFY8BP2sSf35vxd43q0TRA/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJmndtCqHyyQFvHqFJRtWqQDOgiaXK71I5tFkRcKshQINnUOLcbBXiaNicA/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJ1YJAfeH6Z2ibPw4y64MF2icXt40DTV5iaWPBEibm9qhBMM8RDJZPSgQ9XQ/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJOK5Tzg4ibbYic8iaP8AmbzRMQIciancb3YzmABCURLnWrrHDr932QIFfww/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJUBefZxh153LU8IYeibm9NQjGIV9w5Pdic3QJFlzztqJ7IibDmCs4XVjCw/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8Wib0UDSXj1sXQHIzcCdHDSJnq5OsXfo8ViaKANGibzbm1H63fyTdRsoYwoM9sDYaic2wdOmPJT8nXjbQ/640",
+      "https://mmbiz.qpic.cn/sz_mmbiz_png/qcj0oPqOL8W0Sy9icv9XFicFy9wHepP5JZ610Rn8BiauhADZmWSiczlxhPt5OvS93iahicHztHprVRfhCcVTibVCbwxvg/640",
+      "https://mmbiz.qpic.cn/mmbiz_gif/qcj0oPqOL8WRAJPov5pUf8xVn8kcib92nURHzicicTiaUS09SDbXiczaOljUY24HLKn8fBYgFVs7YJxC6sb6pELsia8w/640",
+      "https://mmbiz.qpic.cn/mmbiz_jpg/qcj0oPqOL8U1f7auhwibp6jriako6rplw9FOL8uiaMVnq3oUzX0XXcLEjAGOVeo41ticppRIXJ5ODxibHfqKa0MEqQA/640"
+    ],
+    "url": "https://mp.weixin.qq.com/s/YD6lyJ9wsO6Znx9wjHQQMA",
+    "tags": [
+      "科技",
+      "教程"
+    ],
+    "abbrlink": "cloudflarenotes"
+  },
   "DeepSeek V3.1模型发布，附国内下载地址": {
     "date": "2025-08-20",
     "description": "各位开发者小伙伴注意啦！DeepSeek团队正式推出V3.1版本模型！",
