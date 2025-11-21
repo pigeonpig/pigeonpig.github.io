@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>黑杰克21点</title>
+    <link href="https://gstatic.aby.pub/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f3eacb;
+            --ink-color: #2b2b2b;
+            --accent-color: #c0392b;
+            --ui-font: 'ZCOOL KuaiLe', cursive;
+            --hand-font: 'Patrick Hand', cursive;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--ink-color);
+            font-family: var(--ui-font);
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            user-select: none;
+            overflow-x: hidden;
+        }
+
+        /* 通用手绘边框 */
+        .sketch-border {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--ink-color);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 550px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .zone-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* 装备侧边栏 */
+        .equip-strip {
+            width: 45px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-top: 15px;
+            flex-shrink: 0;
+        }
+
+        .equip-slot {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border: 2px dashed var(--ink-color);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4em;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* 主区域垂直居中 */
+        .main-zone {
+            flex-grow: 1;
+            padding: 12px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .zone-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 2px dashed var(--ink-color);
+            padding-bottom: 5px;
+            width: 100%;
+        }
+
+        .score-tag {
+            font-family: var(--hand-font);
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #555;
+            padding: 2px 8px;
+            border-radius: 12px;
+            margin-left: 5px;
+            border: none;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            min-height: 70px;
+            align-items: center;
+        }
+
+        .card {
+            width: 48px;
+            height: 72px;
+            border: 2px solid var(--ink-color);
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            background: white;
+            font-family: var(--hand-font);
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
+            font-weight: bold;
+        }
+
+        .card.hidden {
+            background: repeating-linear-gradient(45deg, #ddd, #ddd 5px, #fff 5px, #fff 10px);
+            color: transparent;
+        }
+
+        /* 中间信息栏 */
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 20px;
+            background: #fff;
+            border: 2px solid var(--ink-color);
+            border-radius: 15px 255px 15px 255px / 255px 15px 255px 15px;
+            font-size: 1.1em;
+            margin: 5px 0;
+        }
+
+        /* 按钮 */
+        .controls-area {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-game {
+            font-size: 1.3em;
+            padding: 8px 20px;
+            min-width: 80px;
+            background: white;
+            border: 3px solid var(--ink-color);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            font-family: var(--ui-font);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-game:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+
+        .btn-game:active:not(:disabled) {
+            transform: scale(0.95);
+            box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-game:disabled {
+            opacity: 0.5;
+            box-shadow: none;
+        }
+
+        .btn-bag {
+            background-color: #f79984;
+            color: var(--ink-color);
+        }
+
+        /* 背包弹窗 */
+        #start-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(243, 234, 203, 0.95);
+            z-index: 50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+        }
+
+        /* 手绘风格弹窗 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .hand-drawn-modal {
+            background: #fff;
+            border: 4px solid var(--ink-color);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            padding: 25px;
+            max-width: 300px;
+            text-align: center;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .modal-message {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            font-size: 1.2em;
+            padding: 8px 20px;
+            min-width: 80px;
+            background: white;
+            border: 3px solid var(--ink-color);
+            border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            font-family: var(--ui-font);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        .modal-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .modal-btn:active {
+            transform: scale(0.95);
+            box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-btn.confirm {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .modal-btn.cancel {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* 右键菜单 */
+        #ctx-menu {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            background: #fff;
+            border: 2px solid var(--ink-color);
+            border-radius: 5px 15px 5px 15px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .ctx-btn {
+            padding: 8px 15px;
+            font-family: var(--ui-font);
+            border-bottom: 1px dashed #ccc;
+            transition: background 0.1s;
+        }
+
+        .ctx-btn:last-child {
+            border-bottom: none;
+        }
+
+        .ctx-btn:hover {
+            background: #f3eacb;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(44, 62, 80, 0.95);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 1em;
+            pointer-events: none;
+            z-index: 2000;
+            display: none;
+            white-space: pre-line;
+            border: 1px solid #fff;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+            line-height: 1.4;
+        }
+
+        /* 隐藏所有滚动条 */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 针对Firefox浏览器隐藏滚动条 */
+        * {
+            scrollbar-width: none;
+        }
+
+        /* 针对IE/Edge浏览器隐藏滚动条 */
+        * {
+            -ms-overflow-style: none;
+        }
+
+        /* 自定义鼠标指针 */
+        * {
+            cursor: none !important;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 165, 0, 0.8);
+            border: 2px solid #2b2b2b;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease, background 0.2s ease;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-cursor.click {
+            transform: scale(0.6);
+            transition: transform 0.15s ease;
+        }
+
+        /* 鼠标悬停在可点击元素上时变为蓝色 */
+        button:hover,
+        .item-slot:hover,
+        .equip-slot:hover,
+        .ctx-btn:hover,
+        .bag-close:hover,
+        .modal-btn:hover {
+            cursor: none !important;
+        }
+
+        /* 背包弹窗 */
+        .bag-window {
+            width: 95%;
+            max-width: 460px;
+            background: #fff;
+            border: 4px solid var(--ink-color);
+            border-radius: 15px 255px 15px 255px / 255px 15px 255px 15px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bag-close {
+            position: absolute;
+            top: -15px;
+            right: -10px;
+            width: 35px;
+            height: 35px;
+            background: #e74c3c;
+            color: white;
+            border: 2px solid var(--ink-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .bag-top-section {
+            display: flex;
+            gap: 15px;
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 15px;
+        }
+
+        .bag-col-title {
+            font-size: 0.9em;
+            color: #888;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .bag-equip-col {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            align-items: center;
+            width: 50px;
+        }
+
+        .craft-layout {
+            flex-grow: 1;
+            background: #f8f8f8;
+            border: 2px solid var(--ink-color);
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .craft-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+        }
+
+        .craft-arrow {
+            font-size: 2em;
+            color: var(--ink-color);
+            font-family: var(--hand-font);
+            font-weight: bold;
+        }
+
+        .bag-grid {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 4px;
+            padding: 5px;
+            background: #eee;
+            border-radius: 5px;
+        }
+
+        .item-slot {
+            aspect-ratio: 1;
+            background: #fff;
+            border: 1px solid #999;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        .item-slot:hover {
+            background: #f0f0f0;
+            border-color: var(--ink-color);
+        }
+
+        /* 爱心分数显示 */
+        .hearts-container {
+            display: flex;
+            gap: 3px;
+            align-items: center;
+        }
+
+        .heart {
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .heart.lost {
+            opacity: 0.3;
+            filter: grayscale(1);
+        }
+
+        /* 爱心伤害动画 */
+        .heart.damage {
+            animation: heartDamage 0.6s ease-out;
+        }
+
+        @keyframes heartDamage {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            25% {
+                transform: scale(1.3);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(0.8);
+                opacity: 0.6;
+            }
+
+            75% {
+                transform: scale(1.1);
+                opacity: 0.4;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.3;
+                filter: grayscale(1);
+            }
+        }
+        /* 定义隐藏元素的class */
+        .buff-hidden-element {
+        display: none; /* 完全隐藏，不占据空间 */
+        }
+
+        /* 爱心闪烁动画 */
+        .heart.warning {
+            animation: heartWarning 1s infinite alternate;
+        }
+
+        @keyframes heartWarning {
+            0% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+
+            100% {
+                transform: scale(1.1);
+                filter: brightness(1.3);
+            }
+        }
+    </style>
+<script>window.API_DOMAINS=["https://wx-api-deno.onmicrosoft.cn"];window.IMG_DOMAINS=["https://images.weserv.nl/"];</script></head>
+
+<body>
+
+    <!-- 右键菜单 -->
+    <div id="ctx-menu"></div>
+
+    <h1>BlackJack !!!</h1>
+
+    <div class="game-container">
+        <div id="start-overlay">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <div style="text-align: center;">
+                    <h3 style="margin-bottom: 10px;">选择爱心数量</h3>
+                    <div class="hearts-selector sketch-border"
+                        style="padding: 15px; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                        <div class="hearts-container" id="preview-hearts"></div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <button class="btn-game" onclick="changeHeartsCount(-1)"
+                                style="font-size: 1.2em; padding: 5px 10px;">-</button>
+                            <span id="hearts-count" style="font-size: 1.3em; font-weight: bold;">6</span>
+                            <button class="btn-game" onclick="changeHeartsCount(1)"
+                                style="font-size: 1.2em; padding: 5px 10px;">+</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-game" onclick="game.start()" style="font-size:1.8em; padding:15px 40px;">👉
+                    开始挑战</button>
+                <!-- 添加快捷键提示 -->
+                <div style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">
+                    <div>🎮 游戏快捷键:</div>
+                    <div><b>Z</b> - 要牌 | <b>X</b> - 不要 | <b>B</b> - 背包</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI 区域 -->
+        <div class="zone-wrapper">
+            <div class="equip-strip" id="ai-equip-strip">
+                <!-- 动态生成 -->
+            </div>
+            <div class="main-zone sketch-border" id="ai-zone">
+                <div class="zone-header">
+                    <div>
+                        <span>😈 AI对手</span>
+                        <span class="score-tag" id="ai-point-display">0/21</span>
+                        <small id="ai-buffs" class="buff-hidden-element"></small>
+                    </div>
+                    <div class="hearts-container" id="ai-hearts-container"></div>
+                </div>
+                <div class="cards-container" id="ai-cards"></div>
+                <div id="ai-msg"
+                    style="font-size:0.8em; color:#888; text-align:center; min-height:1em; margin-top:5px;"></div>
+            </div>
+        </div>
+
+        <!-- 仪表盘 -->
+        <div class="dashboard">
+            <span>第 <b id="round-num">1</b> 轮</span>
+            <span id="game-msg" style="color:#d35400; font-weight:bold;">准备就绪</span>
+            <span>牌库: <b id="deck-count">11</b></span>
+        </div>
+
+        <!-- 玩家区域 -->
+        <div class="zone-wrapper">
+            <div class="equip-strip" id="player-equip-strip">
+                <!-- 玩家装备栏 (仅展示/点击背包) -->
+                <div class="equip-slot" data-idx="0" title="打开背包"></div>
+                <div class="equip-slot" data-idx="1" title="打开背包"></div>
+                <div class="equip-slot" data-idx="2" title="打开背包"></div>
+                <div class="equip-slot" data-idx="3" title="打开背包"></div>
+            </div>
+            <div class="main-zone sketch-border" id="player-zone">
+                <div class="zone-header">
+                    <div>
+                        <span>🤠 你的手牌</span>
+                        <span class="score-tag" id="player-point-display">0/21</span>
+                        <small id="player-buffs" class="buff-hidden-element"></small>
+                    </div>
+                    <div class="hearts-container" id="player-hearts-container"></div>
+                </div>
+                <div class="cards-container" id="player-cards"></div>
+            </div>
+        </div>
+
+        <!-- 底部控制 -->
+        <div class="controls-area">
+            <button id="btn-hit" class="btn-game" disabled onclick="game.playerAction('hit')">
+                <span>👆</span> 要牌
+            </button>
+            <button id="btn-pass" class="btn-game" disabled onclick="game.playerAction('pass')">
+                <span>👋</span> 过
+            </button>
+            <button class="btn-game btn-bag" onclick="inventory.toggle()">
+                <span>🎒</span> 背包
+            </button>
+        </div>
+    </div>
+
+    <!-- 背包弹窗 -->
+    <div class="modal-overlay" id="bag-modal">
+        <div class="bag-window">
+            <div class="bag-close" onclick="inventory.toggle()">×</div>
+            <h3 style="margin:0 0 10px 0; text-align:center;">🎒 道具背包</h3>
+
+            <div class="bag-top-section">
+                <!-- 装备 (弹窗内展示，不可右键卸下) -->
+                <div class="bag-equip-col">
+                    <div class="bag-col-title">装备</div>
+                    <div class="equip-slot" id="bag-equip-0" data-loc="equip" data-idx="0"></div>
+                    <div class="equip-slot" id="bag-equip-1" data-loc="equip" data-idx="1"></div>
+                    <div class="equip-slot" id="bag-equip-2" data-loc="equip" data-idx="2"></div>
+                    <div class="equip-slot" id="bag-equip-3" data-loc="equip" data-idx="3"></div>
+                </div>
+
+                <!-- 合成台 -->
+                <div style="flex-grow:1; display:flex; flex-direction:column;">
+                    <div class="bag-col-title">合成台 (左键取出)</div>
+                    <div class="craft-layout">
+                        <div class="craft-input-grid">
+                            <div class="item-slot" style="width:35px; height:35px;" data-loc="craft" data-idx="0"></div>
+                            <div class="item-slot" style="width:35px; height:35px;" data-loc="craft" data-idx="1"></div>
+                            <div class="item-slot" style="width:35px; height:35px;" data-loc="craft" data-idx="2"></div>
+                            <div class="item-slot" style="width:35px; height:35px;" data-loc="craft" data-idx="3"></div>
+                        </div>
+                        <div class="craft-arrow">➔</div>
+                        <div style="display:flex; flex-direction:column; align-items:center; gap:5px;">
+                            <div style="font-size:2em;">📦</div>
+                            <button class="btn-game" style="font-size:0.9em; padding:5px 10px; min-width:auto;"
+                                onclick="inventory.craft()">合成</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 格子 -->
+            <div>
+                <div class="bag-col-title" style="text-align:left; margin-left:5px;">物品栏 (左键操作)</div>
+                <div class="bag-grid" id="bag-grid-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 手绘风格确认弹窗 -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="hand-drawn-modal">
+            <div class="modal-title">🎯 本局结果</div>
+            <div class="modal-message">要继续挑战吗？</div>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="game.confirmNewRound(true)">继续挑战</button>
+                <button class="modal-btn cancel" onclick="game.confirmNewRound(false)">结束游戏</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 观星弹窗 -->
+    <div class="modal-overlay" id="star-modal">
+        <div class="hand-drawn-modal">
+            <div class="modal-title">🌟 观星结果</div>
+            <div class="modal-message" id="star-message"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm"
+                    onclick="document.getElementById('star-modal').style.display = 'none'">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        const ITEMS_DB = {
+            weapon: { id: 'weapon', icon: '⚔️', name: '刺刀', type: 'equip', prob: 0.5, desc: '装备：输掉的人额外-1分\n(双方生效)' },
+            shield: { id: 'shield', icon: '🛡️', name: '木盾', type: 'equip', prob: 0.5, desc: '装备：免受本次扣分惩罚\n(仅对自己)' },
+            field: { id: 'field', icon: '⛺', name: '营地', type: 'equip', prob: 0.5, desc: '装备：最大点数上限变为24\n(双方生效)' },
+            insurance: { id: 'insurance', icon: '❤️', name: '心之容器', type: 'equip', prob: 0.4, desc: '装备：若对手爆牌，你可以恢复1点血' },
+            swap: { id: 'swap', icon: '🔃', name: '交换', type: 'use', prob: 0.5, desc: '消耗：交换双方最后一张牌' },
+            undo: { id: 'undo', icon: '↩️', name: '撤回', type: 'use', prob: 0.5, desc: '消耗：丢弃你的最后一张牌' },
+            axe: { id: 'axe', icon: '🪓', name: '手斧', type: 'use', prob: 0.5, desc: '消耗：破坏对方一件装备' },
+            star: { id: 'star', icon: '🌟', name: '观星', type: 'use', prob: 0.4, desc: '消耗：偷看牌堆底部的牌' },
+            book: { id: 'book', icon: '📖', name: '禁书', type: 'use', prob: 0.5, desc: '消耗：随机抽指定点数的牌' },
+            reset: { id: 'reset', icon: '🔄', name: '重置', type: 'use', prob: 0.3, desc: '消耗：重置双方的底牌' },
+        };
+
+        const store = {
+            deck: [], playerHand: [], aiHand: [],
+            bag: Array(27).fill(null),
+            equip: Array(4).fill(null),
+            aiEquip: Array(4).fill(null),
+            craft: Array(4).fill(null),
+            playerHearts: 6,  // 玩家起始爱心数
+            aiHearts: 6       // AI起始爱心数
+        };
+
+        let passCounter = 0; // 记录连续Pass次数
+
+        const inventory = {
+            init: function () {
+                const grid = document.getElementById('bag-grid-container');
+                grid.innerHTML = '';
+                for (let i = 0; i < 27; i++) {
+                    const div = document.createElement('div');
+                    div.className = 'item-slot';
+                    div.dataset.loc = 'bag'; div.dataset.idx = i;
+                    grid.appendChild(div);
+                }
+
+                // 主界面装备栏：点击打开背包
+                document.querySelectorAll('#player-equip-strip .equip-slot').forEach(el => {
+                    el.onclick = () => inventory.toggle();
+                });
+
+                // 全局点击关闭菜单（但排除菜单本身）
+                document.addEventListener('click', (e) => {
+                    const menu = document.getElementById('ctx-menu');
+                    if (menu && !menu.contains(e.target)) {
+                        menu.style.display = 'none';
+                    }
+                });
+                this.render();
+            },
+
+            findEmptyBag: function () { return store.bag.findIndex(x => x === null); },
+            findEmptyCraft: function () { return store.craft.findIndex(x => x === null); },
+
+            addItem: function (item) {
+                const idx = this.findEmptyBag();
+                if (idx !== -1) {
+                    store.bag[idx] = item;
+                    this.render();
+                    game.ui.msg(`获得: ${item.icon}${item.name}`);
+                    const btn = document.querySelector('.btn-bag');
+                    btn.style.transform = 'scale(1.2) rotate(10deg)';
+                    setTimeout(() => btn.style.transform = 'none', 300);
+                } else {
+                    game.ui.msg("背包满啦!");
+                }
+            },
+
+            // 显示右键菜单
+            showMenu: function (e, loc, idx) {
+                e.preventDefault();
+                const item = store[loc][idx];
+                if (!item) return;
+
+                const menu = document.getElementById('ctx-menu');
+                menu.innerHTML = '';
+                menu.style.display = 'flex';
+                menu.style.left = e.pageX + 'px';
+                menu.style.top = e.pageY + 'px';
+
+                const addBtn = (txt, cb) => {
+                    const b = document.createElement('div');
+                    b.className = 'ctx-btn';
+                    b.innerText = txt;
+                    b.onclick = (evt) => {
+                        evt.stopPropagation();
+                        cb();
+                        menu.style.display = 'none';
+                    };
+                    menu.appendChild(b);
+                };
+
+                if (loc === 'bag') {
+                    addBtn(item.type === 'equip' ? "✨ 装备" : "🪄 使用", () => this.useItem(loc, idx));
+                    addBtn("➡️ 放入合成", () => this.moveToCraft(idx));
+                } else if (loc === 'craft') {
+                    addBtn("⬅️ 移回背包", () => this.moveFromCraft(idx));
+                } else if (loc === 'equip') {
+                    // 装备已锁定，不显示卸下，或者仅提示
+                    // addBtn("已锁定 (无法卸下)", () => {});
+                }
+            },
+
+            moveToCraft: function (bagIdx) {
+                const craftIdx = this.findEmptyCraft();
+                if (craftIdx === -1) { game.ui.msg("合成台满啦"); return; }
+                const item = store.bag[bagIdx];
+                store.bag[bagIdx] = null;
+                store.craft[craftIdx] = item;
+                this.render();
+            },
+
+            moveFromCraft: function (craftIdx) {
+                const bagIdx = this.findEmptyBag();
+                if (bagIdx === -1) { game.ui.msg("背包满啦"); return; }
+                const item = store.craft[craftIdx];
+                store.craft[craftIdx] = null;
+                store.bag[bagIdx] = item;
+                this.render();
+            },
+
+            useItem: function (loc, idx) {
+                const list = store[loc];
+                const item = list[idx];
+                if (!item) return;
+
+                if (item.type === 'equip') {
+                    const emptySlot = store.equip.findIndex(x => x === null);
+                    if (emptySlot !== -1) {
+                        store.equip[emptySlot] = item;
+                        list[idx] = null;
+                        this.render();
+                        game.updateBuffs();
+                    } else {
+                        game.ui.msg("装备栏已满");
+                    }
+                } else {
+                    if (!game.isPlayerTurn) { game.ui.msg("非你的回合"); return; }
+                    if (game.applyEffect(item)) {
+                        list[idx] = null;
+                        this.render();
+                    }
+                }
+            },
+
+            craft: function () {
+                const items = store.craft.filter(x => x !== null);
+                if (items.length < 3) { game.ui.msg("合成需要3个物品"); return; }
+                let cnt = 0;
+                for (let i = 0; i < 4; i++) {
+                    if (store.craft[i] && cnt < 3) { store.craft[i] = null; cnt++; }
+                }
+                const newItem = game.lootSystem.generate(true);
+                this.addItem(newItem);
+                game.ui.msg("合成成功! ✨");
+                this.render();
+            },
+
+            toggle: function () {
+                const el = document.getElementById('bag-modal');
+                el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+            },
+
+            render: function () {
+                const renderOne = (loc, idx, item, canInteract) => {
+                    let selector = `#bag-modal .item-slot[data-loc="${loc}"][data-idx="${idx}"]`;
+                    if (loc === 'equip') selector = `#bag-modal .equip-slot[data-loc="${loc}"][data-idx="${idx}"]`;
+
+                    const els = document.querySelectorAll(selector);
+                    els.forEach(el => {
+                        el.innerHTML = item ? `<div class="item-icon">${item.icon}</div>` : '';
+
+                        // 左键菜单绑定
+                        if (canInteract) {
+                            el.onclick = (e) => {
+                                if (item) {
+                                    e.stopPropagation(); // 阻止事件冒泡
+                                    inventory.showMenu(e, loc, idx);
+                                }
+                            };
+                        }
+
+                        // Tooltip
+                        if (item) {
+                            el.onmouseenter = (e) => {
+                                const tt = document.getElementById('tooltip');
+                                tt.innerText = `${item.name}\n${item.desc}`;
+                                tt.style.display = 'block';
+                                const rect = el.getBoundingClientRect();
+                                tt.style.left = rect.right + 5 + 'px';
+                                tt.style.top = rect.top + 'px';
+                            };
+                            el.onmouseleave = () => document.getElementById('tooltip').style.display = 'none';
+                        } else { el.onmouseenter = null; }
+                    });
+
+                    // 主界面玩家装备
+                    if (loc === 'equip') {
+                        const mainEl = document.querySelector(`#player-equip-strip .equip-slot[data-idx="${idx}"]`);
+                        if (mainEl) {
+                            mainEl.innerHTML = item ? item.icon : '';
+                            mainEl.title = item ? item.name : '点击打开背包';
+
+                            // 为主界面装备栏添加tooltip
+                            if (item) {
+                                mainEl.onmouseenter = (e) => {
+                                    const tt = document.getElementById('tooltip');
+                                    tt.innerText = `${item.name}\n${item.desc}`;
+                                    tt.style.display = 'block';
+                                    const rect = mainEl.getBoundingClientRect();
+                                    tt.style.left = rect.right + 5 + 'px';
+                                    tt.style.top = rect.top + 'px';
+                                };
+                                mainEl.onmouseleave = () => document.getElementById('tooltip').style.display = 'none';
+                            } else {
+                                mainEl.onmouseenter = null;
+                                mainEl.onmouseleave = null;
+                            }
+                        }
+                    }
+                };
+
+                store.bag.forEach((it, i) => renderOne('bag', i, it, true));
+                store.equip.forEach((it, i) => renderOne('equip', i, it, false)); // 装备栏不可右键卸下
+                store.craft.forEach((it, i) => renderOne('craft', i, it, true));
+
+                const aiStrip = document.getElementById('ai-equip-strip');
+                aiStrip.innerHTML = '';
+                store.aiEquip.forEach((it, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'equip-slot';
+                    div.innerText = it ? it.icon : '';
+                    div.title = it ? it.name : '';
+
+                    // 为AI装备栏添加tooltip
+                    if (it) {
+                        div.onmouseenter = (e) => {
+                            const tt = document.getElementById('tooltip');
+                            tt.innerText = `${it.name}\n${it.desc}`;
+                            tt.style.display = 'block';
+                            const rect = div.getBoundingClientRect();
+                            tt.style.left = rect.right + 5 + 'px';
+                            tt.style.top = rect.top + 'px';
+                        };
+                        div.onmouseleave = () => document.getElementById('tooltip').style.display = 'none';
+                    }
+
+                    aiStrip.appendChild(div);
+                });
+                game.updateBuffs();  // 添加这行来更新分数显示
+            }
+        };
+
+        const game = {
+            isPlayerTurn: false,
+            lootSystem: {
+                generate: function () {
+                    const keys = Object.keys(ITEMS_DB);
+                    const key = keys[Math.floor(Math.random() * keys.length)];
+                    const tpl = ITEMS_DB[key];
+                    if (key === 'book') {
+                        const n = Math.floor(Math.random() * 11) + 1;
+                        return { ...tpl, id: 'book_' + Date.now(), name: `禁书:${n}`, target: n, desc: `消耗: 必抽数字${n}\n(若无则失效)` };
+                    }
+                    return { ...tpl, id: key + '_' + Date.now() };
+                },
+                tryDrop: function (chance) {
+                    if (Math.random() < chance) inventory.addItem(this.generate());
+                }
+            },
+
+            start: function () {
+                document.getElementById('start-overlay').style.display = 'none';
+                const selectedHearts = parseInt(document.getElementById('hearts-count').innerText);
+                store.playerHearts = selectedHearts;
+                store.aiHearts = selectedHearts;
+                inventory.init();
+                this.newRound();
+            },
+
+            newRound: function () {
+                store.deck = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+                store.playerHand = [];
+                store.aiHand = [];
+                passCounter = 0; // 重置pass计数
+                // 清空玩家和AI的装备
+                store.equip = [null, null, null, null];
+                store.aiEquip = [null, null, null, null];
+                if (Math.random() > 0.7) {
+                    const it = this.lootSystem.generate();
+                    if (it.type === 'equip') {
+                        // 为AI装备使用基础ID，确保能正确匹配
+                        const baseItem = ITEMS_DB[it.id.split('_')[0]];
+                        if (baseItem) {
+                            store.aiEquip[0] = { ...baseItem, id: baseItem.id + '_ai_' + Date.now() };
+                        }
+                    }
+                }
+                this.ui.updateDeck();
+                this.ui.clearTable();
+                this.ui.msg("新的一轮开始了!");
+                inventory.render();
+                this.drawCard('player');
+                this.drawCard('ai');
+
+                this.isPlayerTurn = true;
+                this.ui.toggleBtn(true);
+                this.updateBuffs();
+                this.updateHearts();  // 初始化爱心显示
+            },
+
+            drawCard: function (role, val = null) {
+                if (store.deck.length === 0) return null;
+                let idx;
+                if (val) {
+                    idx = store.deck.indexOf(val);
+                    if (idx === -1) return null;
+                } else { idx = Math.floor(Math.random() * store.deck.length); }
+                const card = store.deck[idx];
+                store.deck.splice(idx, 1);
+                if (role === 'player') store.playerHand.push(card);
+                else store.aiHand.push(card);
+                this.ui.renderCard(role, card, role === 'ai' && store.aiHand.length === 1);
+                this.ui.updateDeck();
+                this.updatePoints();
+                return card;
+            },
+
+            // --- 核心回合逻辑修正 ---
+            playerAction: function (act) {
+                if (!this.isPlayerTurn) return;
+
+                if (act === 'hit') {
+                    const c = this.drawCard('player');
+                    if (!c) { this.ui.msg("牌库空啦!"); return; }
+                    this.lootSystem.tryDrop(0.8);
+                    passCounter = 0; // 有人要牌，pass重置
+                    this.ui.msg("你摸了牌，轮到AI");
+                } else {
+                    this.ui.msg("你选择了过");
+                    this.lootSystem.tryDrop(0.3);
+                    passCounter++;
+                }
+
+                // 无论Hit还是Pass，都切换回合
+                this.isPlayerTurn = false;
+                this.ui.toggleBtn(false);
+
+                if (passCounter >= 2) {
+                    setTimeout(() => this.settle(), 500);
+                } else {
+                    setTimeout(() => this.aiTurn(), 1000);
+                }
+            },
+
+            aiTurn: function () {
+                const sum = this.calcSum(store.aiHand);
+                const limit = this.getBustLimit();
+                let act = 'pass';
+
+                if (store.deck.length > 0) {
+                    // AI 策略
+                    if (sum < limit - 6) act = 'hit';
+                    else if (sum < limit - 3 && Math.random() > 0.5) act = 'hit';
+                }
+
+                if (act === 'hit') {
+                    this.drawCard('ai');
+                    this.ui.aiSay("我还要一张!");
+                    passCounter = 0; // AI要牌，pass重置
+                    this.ui.msg("AI 要了牌，轮到你");
+                } else {
+                    this.ui.aiSay("就这样吧");
+                    passCounter++;
+                    this.ui.msg("AI 选择了过");
+                }
+
+                // 检查结束，或交还回合
+                if (passCounter >= 2) {
+                    setTimeout(() => this.settle(), 500);
+                } else {
+                    this.isPlayerTurn = true;
+                    this.ui.toggleBtn(true);
+                }
+            },
+
+            applyEffect: function (item) {
+                const key = item.id.split('_')[0];
+                if (key === 'swap') {
+                    if (store.playerHand.length < 1 || store.aiHand.length < 1) { this.ui.msg("没牌可换"); return false; }
+                    const p = store.playerHand.pop(); const a = store.aiHand.pop();
+                    store.playerHand.push(a); store.aiHand.push(p);
+                    this.redrawAll(); this.ui.msg("交换了手牌!"); return true;
+                }
+                if (key === 'undo') {
+                    if (store.playerHand.length < 2) { this.ui.msg("底牌不能扔"); return false; }
+                    store.playerHand.pop();
+                    this.redrawAll(); this.ui.msg("撤回了最后一张牌"); return true;
+                }
+                if (key === 'axe') {
+                    const idx = store.aiEquip.findIndex(x => x);
+                    if (idx === -1) { this.ui.msg("AI没有装备"); return false; }
+                    const n = store.aiEquip[idx].name;
+                    store.aiEquip[idx] = null;
+                    inventory.render(); this.updateBuffs(); this.ui.msg(`破坏了AI的 ${n}!`); return true;
+                }
+                if (key === 'star') {
+                    if (store.deck.length === 0) { this.ui.msg("牌库空了"); return false; }
+                    const starCard = store.deck[0];
+                    document.getElementById('star-message').innerText = `观测结果: 牌堆底部是 [ ${starCard} ]`;
+                    document.getElementById('star-modal').style.display = 'flex';
+                    return true;
+                }
+                if (key === 'book') {
+                    const c = this.drawCard('player', item.target);
+                    if (c) this.ui.msg(`禁书生效: 抽到了 ${c}`);
+                    else this.ui.msg(`牌库里没有 ${item.target}`);
+                    return true;
+                }
+                if (key === 'reset') {
+                    if (store.deck.length === 0) { this.ui.msg("牌库空了"); return false; }
+
+                    // 只重置底牌：将双方的第一张牌洗回牌库，然后重新抽第一张牌
+                    if (store.playerHand.length > 0) {
+                        const playerFirstCard = store.playerHand[0];
+                        store.deck.push(playerFirstCard);
+                        // 从牌库中抽取一张新牌替换第一张牌
+                        const playerIdx = Math.floor(Math.random() * store.deck.length);
+                        const newPlayerCard = store.deck[playerIdx];
+                        store.deck.splice(playerIdx, 1);
+                        store.playerHand[0] = newPlayerCard;
+                    }
+
+                    if (store.aiHand.length > 0) {
+                        const aiFirstCard = store.aiHand[0];
+                        store.deck.push(aiFirstCard);
+                        // 从牌库中抽取一张新牌替换第一张牌
+                        const aiIdx = Math.floor(Math.random() * store.deck.length);
+                        const newAiCard = store.deck[aiIdx];
+                        store.deck.splice(aiIdx, 1);
+                        store.aiHand[0] = newAiCard;
+                    }
+
+                    this.redrawAll();
+                    this.ui.msg("重置了双方的底牌!");
+                    return true;
+                }
+                return false;
+            },
+
+            getBustLimit: function () {
+                const hasF = store.equip.some(x => x && x.id.startsWith('field')) || store.aiEquip.some(x => x && x.id.startsWith('field'));
+                return hasF ? 24 : 21;
+            },
+
+            updatePoints: function (showRealAi = false) {
+                const limit = this.getBustLimit();
+                const pSum = this.calcSum(store.playerHand);
+
+                let aSum = 0;
+                if (showRealAi) {
+                    aSum = this.calcSum(store.aiHand);
+                } else {
+                    for (let i = 1; i < store.aiHand.length; i++) aSum += store.aiHand[i];
+                }
+
+                document.getElementById('player-point-display').innerText = `${pSum}/${limit}`;
+                document.getElementById('ai-point-display').innerText = `${aSum}/${limit}`;
+            },
+
+            updateBuffs: function () {
+                const pWep = store.equip.some(x => x && x.id.startsWith('weapon'));
+                const pShd = store.equip.some(x => x && x.id.startsWith('shield'));
+                const aWep = store.aiEquip.some(x => x && x.id.startsWith('weapon'));
+
+                document.getElementById('player-buffs').innerText = (pWep ? "⚔️" : "") + (pShd ? "🛡️" : "");
+                document.getElementById('ai-buffs').innerText = (aWep ? "⚔️" : "");
+
+                const limit = this.getBustLimit();
+                if (limit === 24) {
+                    document.body.style.backgroundColor = "#ebd4d4";
+                    this.ui.msg("场地: 爆牌上限 24");
+                } else {
+                    document.body.style.backgroundColor = "#f3eacb";
+                }
+                this.updatePoints();
+            },
+
+            settle: function () {
+                this.ui.toggleBtn(false);
+                document.getElementById('ai-cards').innerHTML = '';
+                store.aiHand.forEach(c => this.ui.renderCard('ai', c, false));
+                this.updatePoints(true);
+
+                const pSum = this.calcSum(store.playerHand);
+                const aSum = this.calcSum(store.aiHand);
+                const limit = this.getBustLimit();
+
+                let pVal = pSum > limit ? -1 : pSum;
+                let aVal = aSum > limit ? -1 : aSum;
+
+                let pDmg = 0, aDmg = 0, msg = "平局";
+
+                if (pVal > aVal) { msg = "你赢了!"; aDmg = 1; }
+                else if (aVal > pVal) { msg = "AI赢了!"; pDmg = 1; }
+
+                // 修复装备道具的生效逻辑
+                const pWeapon = store.equip.some(x => x && x.id.startsWith('weapon'));
+                const pShield = store.equip.some(x => x && x.id.startsWith('shield'));
+                const aWeapon = store.aiEquip.some(x => x && x.id.startsWith('weapon'));
+
+                // 刺刀效果：输掉的人额外-1分
+                if (pWeapon || aWeapon) {
+                    if (pVal > aVal) aDmg++;
+                    else if (aVal > pVal) pDmg++;
+                }
+
+                // 木盾效果：免受本次扣分惩罚
+                if (pDmg > 0 && pShield) {
+                    pDmg = 0; msg += " (盾牌防御!)";
+                }
+
+                // 心之容器效果：若对手爆牌，己方恢复1点血
+                const pInsurance = store.equip.some(x => x && x.id.startsWith('insurance'));
+                const aInsurance = store.aiEquip.some(x => x && x.id.startsWith('insurance'));
+
+                if (pInsurance && aSum > limit) {
+                    store.playerHearts = Math.min(store.playerHearts + 1, parseInt(document.getElementById('hearts-count').innerText));
+                    msg += " (心之容器: 恢复1血!)";
+                }
+                if (aInsurance && pSum > limit) {
+                    store.aiHearts = Math.min(store.aiHearts + 1, parseInt(document.getElementById('hearts-count').innerText));
+                    msg += " (对手心之容器: 恢复1血!)";
+                }
+
+                // 应用伤害到爱心系统
+                const oldPlayerHearts = store.playerHearts;
+                const oldAiHearts = store.aiHearts;
+                store.playerHearts = Math.max(0, store.playerHearts - pDmg);
+                store.aiHearts = Math.max(0, store.aiHearts - aDmg);
+
+                // 显示伤害动画
+                this.showDamageAnimation(pDmg, aDmg, oldPlayerHearts, oldAiHearts);
+
+                this.ui.msg(`${msg} (你-${pDmg}, AI-${aDmg})`);
+
+                // 检查游戏结束条件
+                if (store.playerHearts <= 0 || store.aiHearts <= 0) {
+                    let finalMsg = "";
+                    if (store.playerHearts <= 0 && store.aiHearts <= 0) {
+                        finalMsg = "平局！双方爱心都耗尽了";
+                    } else if (store.playerHearts <= 0) {
+                        finalMsg = "游戏结束！AI获胜！";
+                    } else {
+                        finalMsg = "游戏结束！你获胜了！";
+                    }
+
+                    setTimeout(() => {
+                        document.getElementById('confirm-modal').style.display = 'flex';
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById('confirm-modal').style.display = 'flex';
+                        document.querySelector('.modal-message').innerText = "对方: " + aSum + " / 己方: " + pSum;
+                    }, 1500);
+                }
+            },
+
+            calcSum: function (arr) { return arr.reduce((a, b) => a + b, 0); },
+
+            redrawAll: function () {
+                this.ui.clearTable(true);
+                store.playerHand.forEach(c => this.ui.renderCard('player', c));
+                store.aiHand.forEach((c, i) => this.ui.renderCard('ai', c, i === 0));
+                this.updatePoints();
+            },
+
+            updateHearts: function () {
+                // 渲染玩家爱心
+                const playerContainer = document.getElementById('player-hearts-container');
+                playerContainer.innerHTML = '';
+                const playerMaxHearts = parseInt(document.getElementById('hearts-count').innerText);
+                for (let i = 0; i < playerMaxHearts; i++) {
+                    const heart = document.createElement('span');
+                    heart.className = 'heart' + (i >= store.playerHearts ? ' lost' : '');
+                    heart.innerText = '❤️';
+                    playerContainer.appendChild(heart);
+                }
+
+                // 渲染AI爱心
+                const aiContainer = document.getElementById('ai-hearts-container');
+                aiContainer.innerHTML = '';
+                const aiMaxHearts = parseInt(document.getElementById('hearts-count').innerText);
+                for (let i = 0; i < aiMaxHearts; i++) {
+                    const heart = document.createElement('span');
+                    heart.className = 'heart' + (i >= store.aiHearts ? ' lost' : '');
+                    heart.innerText = '❤️';
+                    aiContainer.appendChild(heart);
+                }
+
+                if (store.aiHearts <= 3 && store.aiHearts > 0) {
+                    const aiHearts = document.querySelectorAll('#ai-hearts-container .heart:not(.lost)');
+                    aiHearts.forEach(heart => {
+                        heart.classList.add('warning');
+                    });
+                }
+            },
+
+            showDamageAnimation: function (pDmg, aDmg, oldPlayerHearts, oldAiHearts) {
+                // 先更新爱心显示
+                this.updateHearts();
+
+                // 玩家伤害动画
+                if (pDmg > 0) {
+                    const playerHearts = document.querySelectorAll('#player-hearts-container .heart');
+                    for (let i = oldPlayerHearts - pDmg; i < oldPlayerHearts; i++) {
+                        if (playerHearts[i]) {
+                            playerHearts[i].classList.add('damage');
+                            setTimeout(() => {
+                                playerHearts[i].classList.remove('damage');
+                            }, 600);
+                        }
+                    }
+                }
+
+                // AI伤害动画
+                if (aDmg > 0) {
+                    const aiHearts = document.querySelectorAll('#ai-hearts-container .heart');
+                    for (let i = oldAiHearts - aDmg; i < oldAiHearts; i++) {
+                        if (aiHearts[i]) {
+                            aiHearts[i].classList.add('damage');
+                            setTimeout(() => {
+                                aiHearts[i].classList.remove('damage');
+                            }, 600);
+                        }
+                    }
+                }
+            },
+
+            ui: {
+                renderCard: function (role, val, hidden) {
+                    const div = document.createElement('div');
+                    div.className = 'card' + (hidden ? ' hidden' : '');
+                    div.innerText = hidden ? '?' : val;
+                    div.style.transform = `rotate(${Math.floor(Math.random() * 8) - 4}deg)`;
+                    if (!hidden && val >= 10) div.style.color = "#c0392b";
+                    document.getElementById(role + '-cards').appendChild(div);
+                },
+                clearTable: function (visOnly) {
+                    document.getElementById('player-cards').innerHTML = '';
+                    document.getElementById('ai-cards').innerHTML = '';
+                    document.getElementById('ai-msg').innerText = '';
+                },
+                msg: function (t) { document.getElementById('game-msg').innerText = t; },
+                aiSay: function (t) { document.getElementById('ai-msg').innerText = t; },
+                updateDeck: function () { document.getElementById('deck-count').innerText = store.deck.length; },
+                toggleBtn: function (on) {
+                    document.getElementById('btn-hit').disabled = !on;
+                    document.getElementById('btn-pass').disabled = !on;
+                    if (on && store.deck.length === 0) document.getElementById('btn-hit').disabled = true;
+                }
+            }
+        };
+
+        game.confirmNewRound = function (confirm) {
+            // 关闭弹窗
+            document.getElementById('confirm-modal').style.display = 'none';
+
+            if (confirm) {
+                // 如果游戏结束，重置爱心
+                if (store.playerHearts <= 0 || store.aiHearts <= 0) {
+                    const selectedHearts = parseInt(document.getElementById('hearts-count').innerText);
+                    store.playerHearts = selectedHearts;
+                    store.aiHearts = selectedHearts;
+                    this.updateHearts();  // 确保更新爱心显示
+                }
+                this.newRound();
+            }
+        };
+
+        function changeHeartsCount(change) {
+            let currentCount = parseInt(document.getElementById('hearts-count').innerText);
+            currentCount += change;
+            if (currentCount < 1) currentCount = 1;
+            if (currentCount > 10) currentCount = 10;
+            document.getElementById('hearts-count').innerText = currentCount;
+            document.getElementById('preview-hearts').innerHTML = '';
+            for (let i = 0; i < currentCount; i++) {
+                const heart = document.createElement('span');
+                heart.className = 'heart';
+                heart.innerText = '❤️';
+                document.getElementById('preview-hearts').appendChild(heart);
+            }
+        }
+
+        // 页面加载时初始化爱心预览
+        window.onload = function () {
+            changeHeartsCount(0);
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            });
+
+            // 初始化自定义鼠标指针
+            initCustomCursor();
+
+            // 添加快捷键监听
+            initKeyboardShortcuts();
+        };
+
+        // 快捷键功能
+        function initKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // 防止在输入框中触发快捷键
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+
+                const key = e.key.toLowerCase();
+
+                // ESC键：关闭所有弹窗
+                if (key === 'escape') {
+                    closeAllModals();
+                    return;
+                }
+
+                // 检查是否有弹窗打开
+                const isModalOpen = document.querySelector('.modal-overlay[style*="display: flex"]');
+
+                if (isModalOpen) {
+                    // 弹窗打开时的快捷键
+                    handleModalShortcuts(key);
+                } else {
+                    // 游戏进行中的快捷键
+                    handleGameShortcuts(key);
+                }
+            });
+        }
+
+        function closeAllModals() {
+            // 关闭背包弹窗
+            const bagModal = document.getElementById('bag-modal');
+            if (bagModal.style.display === 'flex') {
+                inventory.toggle();
+                return;
+            }
+
+            // 关闭确认弹窗
+            const confirmModal = document.getElementById('confirm-modal');
+            if (confirmModal.style.display === 'flex') {
+                confirmModal.style.display = 'none';
+                return;
+            }
+
+            // 关闭观星弹窗
+            const starModal = document.getElementById('star-modal');
+            if (starModal.style.display === 'flex') {
+                starModal.style.display = 'none';
+                return;
+            }
+        }
+
+        function handleModalShortcuts(key) {
+            switch (key) {
+                case 'z':
+                    // 确认操作
+                    const confirmModal = document.getElementById('confirm-modal');
+                    if (confirmModal.style.display === 'flex') {
+                        game.confirmNewRound(true);
+                    }
+                    break;
+
+                case 'x':
+                    // 取消操作
+                    const confirmModal2 = document.getElementById('confirm-modal');
+                    if (confirmModal2.style.display === 'flex') {
+                        game.confirmNewRound(false);
+                    }
+
+                    const starModal = document.getElementById('star-modal');
+                    if (starModal.style.display === 'flex') {
+                        starModal.style.display = 'none';
+                    }
+                    break;
+
+                case 'b':
+                case 'escape':
+                    // 关闭背包
+                    const bagModal = document.getElementById('bag-modal');
+                    if (bagModal.style.display === 'flex') {
+                        inventory.toggle();
+                    }
+                    break;
+            }
+        }
+
+        function handleGameShortcuts(key) {
+            switch (key) {
+                case 'z':
+                    // 要牌
+                    if (game.isPlayerTurn && !document.getElementById('btn-hit').disabled) {
+                        game.playerAction('hit');
+                    }
+                    break;
+
+                case 'x':
+                    // 不要
+                    if (game.isPlayerTurn && !document.getElementById('btn-pass').disabled) {
+                        game.playerAction('pass');
+                    }
+                    break;
+
+                case 'b':
+                    // 打开/关闭背包
+                    inventory.toggle();
+                    break;
+            }
+        }
+
+        // 自定义鼠标指针功能
+        function initCustomCursor() {
+            // 创建自定义鼠标指针元素
+            const cursor = document.createElement('div');
+            cursor.className = 'custom-cursor';
+            document.body.appendChild(cursor);
+
+            // 鼠标移动计时器
+            let mouseMoveTimer;
+            const hideCursorAfterInactivity = () => {
+                cursor.style.display = 'none';
+            };
+
+            // 重置计时器函数
+            const resetInactivityTimer = () => {
+                clearTimeout(mouseMoveTimer);
+                cursor.style.display = 'block';
+                mouseMoveTimer = setTimeout(hideCursorAfterInactivity, 5000); // 5秒后隐藏
+            };
+
+            // 鼠标移动事件
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 10 + 'px';
+                cursor.style.top = e.clientY - 10 + 'px';
+
+                // 检测鼠标是否悬停在可点击元素上
+                const hoveredElement = document.elementFromPoint(e.clientX, e.clientY);
+                const isHoveringClickable = hoveredElement && (
+                    hoveredElement.tagName === 'BUTTON' ||
+                    hoveredElement.classList.contains('item-slot') ||
+                    hoveredElement.classList.contains('equip-slot') ||
+                    hoveredElement.classList.contains('ctx-btn') ||
+                    hoveredElement.classList.contains('bag-close') ||
+                    hoveredElement.classList.contains('modal-btn')
+                );
+
+                if (isHoveringClickable) {
+                    cursor.style.background = 'rgba(189, 255, 150, 0.8)';
+                } else {
+                    cursor.style.background = 'rgba(255, 245, 227, 0.8)';
+                }
+
+                // 重置不活动计时器
+                resetInactivityTimer();
+            });
+
+            // 鼠标点击事件
+            document.addEventListener('mousedown', () => {
+                cursor.classList.add('click');
+                resetInactivityTimer(); // 点击时重置计时器
+            });
+
+            document.addEventListener('mouseup', () => {
+                cursor.classList.remove('click');
+                resetInactivityTimer(); // 释放时重置计时器
+            });
+
+            // 确保鼠标指针在弹窗等元素上也能正确显示
+            document.addEventListener('mouseenter', () => {
+                cursor.style.display = 'block';
+                resetInactivityTimer(); // 鼠标进入页面时重置计时器
+            });
+
+            document.addEventListener('mouseleave', () => {
+                cursor.style.display = 'none';
+                // 鼠标离开页面时不需要重置计时器
+            });
+
+            // 初始化时启动计时器
+            resetInactivityTimer();
+        }
+    </script>
+</body>
+
+</html>
