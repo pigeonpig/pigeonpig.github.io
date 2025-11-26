@@ -283,6 +283,18 @@
     ],
     "abbrlink": "cloudflarenotes"
   },
+  "DeepSeek V3.1模型发布，附国内下载地址": {
+    "date": "2025-08-20",
+    "description": "各位开发者小伙伴注意啦！DeepSeek团队正式推出V3.1版本模型！",
+    "images": [
+      "https://res.wx.qq.com/t/wx_fed/we-emoji/res/assets/Expression/Expression_34@2x.png"
+    ],
+    "url": "https://mp.weixin.qq.com/s/Os2p6kqP3YsBLCAgjPshqA",
+    "tags": [
+      "CNB平台精选"
+    ],
+    "abbrlink": "cnbdeepseekr1"
+  },
   "告别镜像下载慢！一个简单又强大的 Docker 镜像加速方案": {
     "date": "2025-08-04",
     "description": "众所周知，Docker 已成为现代开发者的“标配”工具。然而，由于 Docker 官方镜像仓库位于境外，国内开发者经常在拉取镜像时遇到下载缓慢甚至失败的问题……",
